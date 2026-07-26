@@ -222,17 +222,8 @@
       <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:36px;display:flex;flex-direction:column;gap:18px">
         <input placeholder="ชื่อ-นามสกุล" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit">
         <input placeholder="เบอร์โทรศัพท์" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit">
+        <input placeholder="ไอดีไลน์ (ถ้ามี)" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit">
         <textarea placeholder="รายละเอียดงานที่ต้องการ" rows="4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit;resize:none"></textarea>
-        <label style="display:flex;flex-direction:column;gap:8px;background:rgba(255,255,255,0.08);border:1px dashed rgba(255,255,255,0.35);border-radius:2px;padding:14px 16px;color:#cfe0ff;font-size:13px;cursor:pointer">
-          <span style="white-space:nowrap">แนบไฟล์ (รูปภาพ/แบบ) ถ้ามี — ไม่เกิน 10 MB</span>
-          <input type="file" onChange="{{ handleFileChange }}" style="color:#cfe0ff;font-size:13px;width:100%">
-        </label>
-        <sc-if value="{{ fileName }}" hint-placeholder-val="{{ false }}">
-          <div style="font-size:13px;color:#9fbaea">ไฟล์ที่แนบ: {{ fileName }}</div>
-        </sc-if>
-        <sc-if value="{{ fileError }}" hint-placeholder-val="{{ false }}">
-          <div style="font-size:13px;color:#ffb4b4">{{ fileError }}</div>
-        </sc-if>
         <button style="background:#fff;color:#0f2f5c;padding:14px;border:none;border-radius:2px;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#cfe0ff">ส่งข้อความ</button>
       </div>
     </div>
@@ -272,7 +263,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;fontFamily&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;'Sarabun',sans-serif&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;'Sarabun',sans-serif&quot;,&quot;'Prompt',sans-serif&quot;,&quot;'Noto Sans Thai',sans-serif&quot;,&quot;'Kanit',sans-serif&quot;,&quot;'Mitr',sans-serif&quot;],&quot;section&quot;:&quot;Typography&quot;},&quot;menuFontSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:19,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:12,&quot;max&quot;:22,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;section&quot;:&quot;Typography&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', submenuOpen: false, fileName: '', fileError: '', ctaOpen: false, ctaVisible: false, mobileMenuOpen: false, width: typeof window !== 'undefined' ? window.innerWidth : 1280 };
+  state = { page: 'home', submenuOpen: false, ctaOpen: false, ctaVisible: false, mobileMenuOpen: false, width: typeof window !== 'undefined' ? window.innerWidth : 1280 };
 
   componentDidMount() {
     this._onResize = () => this.setState({ width: window.innerWidth });
@@ -359,18 +350,6 @@ class Component extends DCLogic {
       closeCtaHover: () => this.closeCta(),
       ctaVisible: this.state.ctaVisible,
       ctaAnim: this.state.ctaOpen ? 'ctaItemIn' : 'ctaItemOut',
-      fileName: this.state.fileName,
-      fileError: this.state.fileError,
-      handleFileChange: (e) => {
-        const f = e.target.files[0];
-        if (!f) { this.setState({ fileName: '', fileError: '' }); return; }
-        if (f.size > 10 * 1024 * 1024) {
-          this.setState({ fileName: '', fileError: 'ไฟล์มีขนาดเกิน 10 MB กรุณาเลือกไฟล์ใหม่' });
-          e.target.value = '';
-        } else {
-          this.setState({ fileName: f.name, fileError: '' });
-        }
-      },
       isHome: page === 'home',
       isAbout: page === 'about',
       isServices: page === 'services',
