@@ -316,12 +316,17 @@
       // Multipart when a file is attached (so it actually reaches the
       // server), plain JSON otherwise — either way the backend must repeat
       // the validation described above; nothing here is a security boundary.
+      // Accept: application/json asks Formspree (and similar form backends)
+      // to reply with JSON instead of redirecting, which is what res.ok below
+      // expects. Content-Type is deliberately omitted on the file branch —
+      // the browser sets the multipart boundary itself; setting it manually
+      // breaks the upload.
       var hasFile = fileField && fileField.files && fileField.files[0];
       var fetchInit = hasFile
-        ? { method: 'POST', body: new FormData(form) }
+        ? { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) }
         : {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
               name:   form.elements.name.value.trim(),
               phone:  form.elements.phone.value.trim(),
