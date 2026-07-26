@@ -205,51 +205,7 @@
       name:   function (v) { return v.trim().length >= 2; },
       phone:  function (v) { return (v.replace(/\D/g, '').length >= 9); },
       detail: function (v) { return v.trim().length >= 5; }
-      // `file` is optional and validated separately (size, not presence) —
-      // see the change handler below.
     };
-
-    /* ── Attachment ──
-       Client-side size check only. It stops accidental oversized uploads,
-       nothing more — it runs in the visitor's browser and a spammer can
-       skip it entirely. Once data-endpoint below points at a real backend,
-       that backend must re-check size and type, verify file content (not
-       just the extension), and store uploads outside any web-executable
-       path before this field can be trusted. */
-    var fileField    = form.elements.file;
-    var fileWrap     = fileField && fileField.closest('.field--file');
-    var fileNameOut  = form.querySelector('[data-filename]');
-    var fileErrorOut = form.querySelector('[data-error-for="file"]');
-
-    function clearFileMessage() {
-      if (fileWrap) fileWrap.removeAttribute('data-invalid');
-      if (fileNameOut)  { fileNameOut.hidden = true; fileNameOut.textContent = ''; }
-      if (fileErrorOut) { fileErrorOut.hidden = true; fileErrorOut.textContent = ''; }
-    }
-
-    if (fileField) {
-      fileField.addEventListener('change', function () {
-        var f = fileField.files[0];
-        clearFileMessage();
-        if (!f) return;
-
-        var maxBytes = Number(fileField.dataset.maxBytes) || Infinity;
-        if (f.size > maxBytes) {
-          fileField.value = '';
-          if (fileWrap) fileWrap.setAttribute('data-invalid', 'true');
-          if (fileErrorOut) {
-            fileErrorOut.hidden = false;
-            fileErrorOut.textContent = 'ไฟล์มีขนาดเกิน ' + Math.round(maxBytes / 1024 / 1024) + ' MB กรุณาเลือกไฟล์ใหม่';
-          }
-          return;
-        }
-
-        if (fileNameOut) {
-          fileNameOut.hidden = false;
-          fileNameOut.textContent = 'ไฟล์ที่แนบ: ' + f.name;
-        }
-      });
-    }
 
     function setFieldError(field, invalid) {
       var msg = form.querySelector('[data-error-for="' + field.name + '"]');
@@ -313,32 +269,21 @@
       button.disabled = true;
       say('กำลังส่งข้อความ…');
 
-      // Multipart when a file is attached (so it actually reaches the
-      // server), plain JSON otherwise — either way the backend must repeat
-      // the validation described above; nothing here is a security boundary.
       // Accept: application/json asks Formspree (and similar form backends)
       // to reply with JSON instead of redirecting, which is what res.ok below
-      // expects. Content-Type is deliberately omitted on the file branch —
-      // the browser sets the multipart boundary itself; setting it manually
-      // breaks the upload.
-      var hasFile = fileField && fileField.files && fileField.files[0];
-      var fetchInit = hasFile
-        ? { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) }
-        : {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-              name:   form.elements.name.value.trim(),
-              phone:  form.elements.phone.value.trim(),
-              detail: form.elements.detail.value.trim()
-            })
-          };
-
-      fetch(endpoint, fetchInit)
+      // expects.
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:   form.elements.name.value.trim(),
+          phone:  form.elements.phone.value.trim(),
+          detail: form.elements.detail.value.trim()
+        })
+      })
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           form.reset();
-          clearFileMessage();
           say('ส่งข้อความเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุด');
         })
         .catch(function () {

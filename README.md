@@ -97,26 +97,18 @@ the hero image, the about image, eight gallery tiles, and three article thumbnai
 Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
 photos are available.
 
-**Contact form.** There is no backend. The form validates client-side, then tells the
-visitor to call or LINE instead. To enable real submissions, set the endpoint on the
-form in `index.html`:
+**Contact form** submits to Formspree (`data-endpoint="https://formspree.io/f/mvzedodb"`
+in `index.html`). `app.js` POSTs JSON (`name`, `phone`, `detail`) and shows a success or
+failure message based on the response. If `data-endpoint` is ever cleared, it falls back
+to telling the visitor to call or LINE instead rather than silently failing.
 
-```html
-<form class="contact__form" id="enquiry-form" novalidate data-endpoint="https://…">
-```
-
-`app.js` then POSTs JSON (`name`, `phone`, `detail`) if no file is attached, or
-`multipart/form-data` (via `new FormData(form)`) if one is, and handles the
-success/failure states either way.
-
-**File attachment — security is entirely unimplemented, by design, until there's a
-backend.** The form has an optional file field (images, PDF, or DWG; 10 MB cap). The
-10 MB check runs in the visitor's browser — it stops accidental oversized uploads,
-nothing more. It is not a security boundary: a spammer can skip it, and the `accept`
-attribute is a picker hint, not enforcement. Before wiring `data-endpoint` to a real
-backend, that backend must independently: cap request/file size, check file content
-(magic bytes, not just extension or the client-reported MIME type), store uploads
-outside any web-executable path, and rate-limit submissions. None of that exists yet.
+**No file attachment.** The design includes an optional file field on this form, but
+Formspree's free plan rejects any submission containing a file outright — confirmed by
+testing a real submission, not just reading their docs (`{"error":"File Uploads Not
+Permitted"}`). Shipping the field would have made every attachment attempt fail with a
+generic "ส่งข้อความไม่สำเร็จ" error, so it's removed from `index.html` entirely rather
+than left half-working. To bring it back: upgrade to Formspree Gold, or switch to a
+form backend that supports uploads on its free tier (e.g. Web3Forms).
 
 **Social links.** The design lists the LINE ID (`allaboutglass`) and Facebook handle
 (`allaboutglassth`) as plain text. They are linked here to

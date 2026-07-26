@@ -515,38 +515,6 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
 }
 .contact__form [aria-invalid="true"] { border-color: #ffb4b4; }
 
-.field--file__dropzone {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: rgba(255,255,255,0.08);
-  border: 1px dashed rgba(255,255,255,0.35);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  color: var(--blue-pale);
-  font-size: 13px;
-  cursor: pointer;
-}
-.field--file__dropzone:has(input:focus-visible) {
-  border-color: var(--blue-pale);
-  background: rgba(255,255,255,0.12);
-}
-.field--file input[type="file"] {
-  width: 100%;
-  color: var(--blue-pale);
-  font: inherit;
-  font-size: 13px;
-}
-/* Size errors re-use the shared error styling but need their own container
-   since the file field has no visible <input> border to mark invalid. */
-.field--file[data-invalid="true"] .field--file__dropzone { border-color: #ffb4b4; }
-
-.field__filename {
-  margin: -8px 0 0;
-  font-size: 13px;
-  color: var(--blue-soft);
-}
-
 .field__error {
   margin: 6px 0 0;
   font-size: 13px;

@@ -283,20 +283,13 @@
           <textarea id="f-detail" name="detail" rows="4" required placeholder="รายละเอียดงานที่ต้องการ"></textarea>
           <p class="field__error" data-error-for="detail" hidden>กรุณากรอกรายละเอียดงาน</p>
         </div>
-        <div class="field field--file">
-          <label for="f-file" class="field--file__dropzone">
-            <span>แนบไฟล์ (รูปภาพ/แบบ) ถ้ามี — ไม่เกิน 10 MB</span>
-            <!--
-              accept is a UX hint only (users can override the file-type filter or
-              rename any file), not a security control. There is no backend yet;
-              once data-endpoint is wired up, re-validate type/size/content server
-              side and store uploads outside any web-executable path.
-            -->
-            <input id="f-file" name="file" type="file" accept="image/*,.pdf,.dwg" data-max-bytes="10485760">
-          </label>
-          <p class="field__filename" data-filename hidden></p>
-          <p class="field__error" data-error-for="file" hidden></p>
-        </div>
+        <!--
+          The design includes a file-attachment field here, but the Formspree
+          free plan this form submits to rejects any request containing a
+          file ("File Uploads Not Permitted") — confirmed by testing an actual
+          submission, not just reading their docs. Dropped rather than shipped
+          broken; see README for the options if attachments are needed later.
+        -->
         <button class="btn btn--light btn--block" type="submit">ส่งข้อความ</button>
         <p class="form-status" role="status" aria-live="polite"></p>
       </form>
