@@ -276,9 +276,10 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          name:   form.elements.name.value.trim(),
-          phone:  form.elements.phone.value.trim(),
-          detail: form.elements.detail.value.trim()
+          name:    form.elements.name.value.trim(),
+          phone:   form.elements.phone.value.trim(),
+          line_id: form.elements.line_id.value.trim(),
+          detail:  form.elements.detail.value.trim()
         })
       })
         .then(function (res) {
