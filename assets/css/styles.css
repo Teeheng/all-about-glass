@@ -1,0 +1,729 @@
+/* ══════════════════════════════════════════════════
+   All About Glass — site styles
+   Tokens mirror the design source (All About Glass.dc.html)
+   ══════════════════════════════════════════════════ */
+
+:root {
+  --bg:          #fbfbfc;
+  --ink:         #12233f;
+  --body:        #3a4a63;
+  --muted:       #5a6f8f;
+
+  --navy:        #0f2f5c;
+  --navy-deep:   #0a2545;
+  --blue:        #1d4e8f;
+  --blue-pale:   #cfe0ff;
+  --blue-soft:   #9fbaea;
+  --blue-mist:   #c9d7ec;
+  --foot:        #7f9bd0;
+
+  --panel:       #f0f3f9;
+  --line:        rgba(15, 47, 92, 0.10);
+  --line-soft:   rgba(15, 47, 92, 0.08);
+
+  --shell:       1240px;
+  --gutter:      32px;
+  --radius:      4px;
+  --radius-sm:   2px;
+
+  --header-h:    93px;
+  --section-y:   100px;
+
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Logo is cropped to this visible height; the <img> is scaled up so the
+     104:58 ratio from the source design holds at every breakpoint. */
+  --logo-h: 58px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: 'Sarabun', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+a { color: var(--navy); text-decoration: none; }
+a:hover { color: var(--blue); }
+img { max-width: 100%; display: block; }
+::selection { background: var(--navy); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  width: 100%;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus { left: 0; color: #fff; }
+
+/* ── Header ───────────────────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 251, 252, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-bar {
+  padding-block: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* The source logo file has generous whitespace above/below the mark; crop
+   to --logo-h by rendering the image taller than its wrapper and clipping. */
+.brand__mark {
+  display: flex;
+  align-items: center;
+  height: var(--logo-h);
+  overflow: hidden;
+}
+.brand__mark img {
+  height: calc(var(--logo-h) * 104 / 58);
+  width: auto;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+/* :not(.btn) keeps these off the CTA — a bare `.site-nav a` outranks
+   `.btn--primary` and would repaint the button's text with nav colours. */
+.site-nav a:not(.btn) { color: var(--ink); }
+.site-nav a:not(.btn):hover { color: var(--blue); }
+
+.site-nav > a[aria-current="page"],
+.has-sub > a.is-active {
+  color: var(--navy);
+  font-weight: 700;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 2px;
+}
+
+/* Dropdown: สินค้าและบริการ */
+.has-sub { position: relative; }
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 14px;
+  z-index: 60;
+}
+/* Hidden by default; revealed on hover, on keyboard focus, or by JS */
+.has-sub:not(.is-open) .submenu { display: none; }
+.has-sub:hover .submenu,
+.has-sub:focus-within .submenu { display: block; }
+
+.submenu__panel {
+  background: #fff;
+  border: 1px solid rgba(15, 47, 92, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(15, 47, 92, 0.15);
+  min-width: 180px;
+  overflow: hidden;
+}
+.submenu__panel a {
+  display: block;
+  padding: 12px 20px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.submenu__panel a + a { border-top: 1px solid var(--line-soft); }
+.submenu__panel a:hover { background: var(--panel); color: var(--ink); }
+.submenu__panel a[aria-current="page"] { background: var(--panel); color: var(--navy); font-weight: 700; }
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  place-items: center;
+}
+.nav-toggle__bars,
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--navy);
+  transition: transform .2s ease, opacity .2s ease;
+}
+.nav-toggle__bars { position: relative; }
+.nav-toggle__bars::before,
+.nav-toggle__bars::after { content: ''; position: absolute; left: 0; }
+.nav-toggle__bars::before { top: -6px; }
+.nav-toggle__bars::after  { top: 6px; }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after  { transform: translateY(-6px) rotate(-45deg); }
+
+/* ── Buttons ──────────────────────────────────── */
+
+.btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 14px 30px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.btn--primary { background: var(--navy); color: #fff; padding: 10px 18px; font-size: 14px; white-space: nowrap; }
+.btn--primary:hover { background: var(--blue); color: #fff; }
+
+.btn--light { background: #fff; color: var(--navy); }
+.btn--light:hover { background: var(--blue-pale); color: var(--navy); }
+
+.btn--ghost { border-color: rgba(255,255,255,0.4); color: #fff; }
+.btn--ghost:hover { border-color: #fff; color: #fff; }
+
+.btn--block { width: 100%; }
+
+.btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ── Shared section furniture ─────────────────── */
+
+.page[hidden] { display: none; }
+
+.section { padding-block: var(--section-y); }
+.section--panel { background: var(--panel); }
+
+.section__head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+.section__sub {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
+
+.eyebrow {
+  color: var(--blue);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin: 0 0 12px;
+}
+.eyebrow--on-navy { color: var(--blue-soft); }
+.eyebrow--boxed {
+  display: inline-block;
+  padding: 6px 16px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius-sm);
+  color: var(--blue-pale);
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+/* h1's font-size is set on .hero h1 (three fixed steps, not fluid — see the
+   responsive tiers below) since the hero heading is the only <h1> on the site. */
+h1 { line-height: 1.25; font-weight: 700; margin: 0 0 20px; }
+h2 { font-size: 36px; line-height: 1.3; font-weight: 700; margin: 0 0 24px; }
+h3 { font-size: 19px; font-weight: 600; margin: 0; }
+
+.prose {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--body);
+  margin: 0 0 20px;
+}
+.prose:last-of-type { margin-bottom: 32px; }
+
+/* Image placeholders (swap for real <img> when photos land) */
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.frame > span {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding-inline: 20px;
+}
+.frame--dark {
+  border: 1px solid rgba(255,255,255,0.2);
+  background: repeating-linear-gradient(135deg, #16376b, #16376b 14px, #1c4079 14px, #1c4079 28px);
+}
+.frame--dark > span { color: rgba(255,255,255,0.7); }
+.frame--light {
+  border: 1px solid var(--line);
+  background: repeating-linear-gradient(115deg, #e7edf6, #e7edf6 14px, #dbe4f2 14px, #dbe4f2 28px);
+}
+.frame--light > span { color: var(--muted); }
+.frame--portrait { aspect-ratio: 4 / 5; }
+.frame--square   { aspect-ratio: 1 / 1; }
+.frame--wide     { aspect-ratio: 16 / 10; border: 0; border-radius: 0; }
+.frame--sm {
+  border-radius: 3px;
+  border-color: var(--line-soft);
+  background: repeating-linear-gradient(115deg, #e7edf6, #e7edf6 12px, #dbe4f2 12px, #dbe4f2 24px);
+}
+.frame--sm > span { font-size: 11px; padding-inline: 10px; }
+
+/* ── Hero ─────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--navy-deep) 0%, var(--navy) 55%, var(--blue) 100%);
+}
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 90px);
+}
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--section-y);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero h1 { color: #fff; font-size: 52px; }
+.hero__lead {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--blue-mist);
+  max-width: 520px;
+  margin: 0 0 32px;
+}
+
+/* ── About ────────────────────────────────────── */
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* ── Services ─────────────────────────────────── */
+
+.card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.card {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -18px rgba(15, 47, 92, 0.55);
+}
+.card__num {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card__num--alt { background: var(--blue); }
+.card p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── Gallery ──────────────────────────────────── */
+
+.gallery-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ── Articles ─────────────────────────────────── */
+
+.article-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.article-card {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -18px rgba(15, 47, 92, 0.55);
+}
+.article-card__body { padding: 24px; }
+.article-card__body h3 { font-size: 18px; margin: 0 0 10px; }
+.article-card__body p { font-size: 14px; line-height: 1.7; color: var(--muted); margin: 0; }
+
+/* ── Contact ──────────────────────────────────── */
+
+.contact {
+  background: var(--navy);
+  color: #fff;
+}
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+.contact h2 { color: #fff; }
+
+.contact__list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+.contact__list dt { font-size: 13px; color: var(--blue-soft); margin-bottom: 4px; }
+.contact__list dd { margin: 0; }
+.contact__list a { color: #fff; }
+.contact__list a:hover { color: var(--blue-pale); text-decoration: underline; }
+
+.contact__form {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field { display: flex; flex-direction: column; }
+/* Placeholders carry the label visually; the real <label> is .sr-only in markup */
+
+.contact__form input,
+.contact__form textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+}
+.contact__form textarea { resize: none; }
+.contact__form ::placeholder { color: rgba(255,255,255,0.6); }
+.contact__form input:focus,
+.contact__form textarea:focus {
+  outline: none;
+  border-color: var(--blue-pale);
+  background: rgba(255,255,255,0.12);
+}
+.contact__form [aria-invalid="true"] { border-color: #ffb4b4; }
+
+.field--file__dropzone {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px dashed rgba(255,255,255,0.35);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  color: var(--blue-pale);
+  font-size: 13px;
+  cursor: pointer;
+}
+.field--file__dropzone:has(input:focus-visible) {
+  border-color: var(--blue-pale);
+  background: rgba(255,255,255,0.12);
+}
+.field--file input[type="file"] {
+  width: 100%;
+  color: var(--blue-pale);
+  font: inherit;
+  font-size: 13px;
+}
+/* Size errors re-use the shared error styling but need their own container
+   since the file field has no visible <input> border to mark invalid. */
+.field--file[data-invalid="true"] .field--file__dropzone { border-color: #ffb4b4; }
+
+.field__filename {
+  margin: -8px 0 0;
+  font-size: 13px;
+  color: var(--blue-soft);
+}
+
+.field__error {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #ffc4c4;
+}
+
+.form-status {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--blue-pale);
+  min-height: 1em;
+}
+.form-status[data-state="error"] { color: #ffc4c4; }
+
+/* ── Footer ───────────────────────────────────── */
+
+.site-footer {
+  background: var(--navy-deep);
+  padding: 32px;
+  text-align: center;
+  color: var(--foot);
+  font-size: 13px;
+}
+
+/* ── Floating speed-dial CTA ────────────────────
+   Opens on hover (desktop) or click/tap (touch, keyboard) via .is-open on
+   the container; JS keeps aria-expanded and satellite tabindex in sync so
+   the hidden links aren't reachable by Tab while closed. */
+
+.speed-dial {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+  width: 60px;
+  height: 60px;
+}
+
+.speed-dial__satellites {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.speed-dial__satellites li { display: contents; }
+
+.speed-dial__satellite {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transform: translate(0, 0) scale(.4);
+  pointer-events: none;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .25s ease, background-color .18s ease;
+}
+.speed-dial.is-open .speed-dial__satellite {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(var(--tx), var(--ty)) scale(1);
+}
+.speed-dial__satellite--phone { background: var(--navy); --tx: -8px;  --ty: -92px; transition-delay: .02s; box-shadow: 0 6px 16px rgba(15,47,92,0.35); }
+.speed-dial__satellite--phone:hover { background: var(--blue); }
+.speed-dial__satellite--line  { background: #06c755; --tx: -76px; --ty: -64px; transition-delay: .08s; box-shadow: 0 6px 16px rgba(6,199,85,0.35); font-weight: 700; font-size: 14px; }
+.speed-dial__satellite--line:hover { background: #05b34c; }
+.speed-dial__satellite--fb    { background: #1877f2; --tx: -96px; --ty: 4px;   transition-delay: .14s; box-shadow: 0 6px 16px rgba(24,119,242,0.35); }
+.speed-dial__satellite--fb:hover { background: #1567d3; }
+
+.speed-dial__toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(15,47,92,0.4);
+  cursor: pointer;
+  transition: background-color .25s ease;
+  z-index: 2;
+}
+.speed-dial__toggle:hover {
+  background: var(--blue);
+  animation: speed-dial-wiggle .6s ease-in-out infinite alternate;
+}
+
+.speed-dial__icon { position: absolute; transition: opacity .15s ease, transform .15s ease; }
+.speed-dial__icon--open  { opacity: 0; transform: scale(.6) rotate(-45deg); }
+.speed-dial__icon--closed{ opacity: 1; transform: scale(1) rotate(0deg); }
+.speed-dial__toggle[aria-expanded="true"]  .speed-dial__icon--open   { opacity: 1; transform: scale(1) rotate(0deg); }
+.speed-dial__toggle[aria-expanded="true"]  .speed-dial__icon--closed { opacity: 0; transform: scale(.6) rotate(45deg); }
+
+@keyframes speed-dial-wiggle {
+  0%   { transform: scale(1) rotate(0deg); }
+  50%  { transform: scale(1.1) rotate(8deg); }
+  100% { transform: scale(1.1) rotate(-8deg); }
+}
+
+/* ── Mobile flat menu ───────────────────────────
+   A separate list from the desktop nav (not the same element reflowed) —
+   the dropdown's two items appear flat, and ติดต่อเรา merges with the CTA
+   into one bold link. Shown only inside the nav-switch tier below; hidden
+   here as a default so it can never appear above that width even if the
+   `hidden` attribute is out of sync. */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  padding: 8px 24px 20px;
+  font-size: 17px;
+  font-weight: 500;
+  border-top: 1px solid var(--line-soft);
+}
+.mobile-nav a { padding: 12px 0; color: var(--ink); }
+.mobile-nav a:hover { color: var(--blue); }
+.mobile-nav a[aria-current="page"] { color: var(--navy); font-weight: 700; }
+.mobile-nav__cta { color: var(--navy) !important; font-weight: 700; }
+
+/* ══ Responsive ═══════════════════════════════════ */
+
+/* Layout tiers — match the design's own width thresholds exactly
+   (isMobile: width<860, isNarrow: width<700). Content padding, heading
+   size, and grid columns all key off these two breakpoints. */
+
+@media (max-width: 859px) {
+  :root { --section-y: 72px; --gutter: 24px; }
+
+  .hero h1 { font-size: 40px; }
+
+  .about__grid { grid-template-columns: 1fr; gap: 40px; }
+  .about__grid .frame { max-width: 460px; }
+
+  .card-grid,
+  .article-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 699px) {
+  :root { --section-y: 56px; --gutter: 20px; }
+
+  .hero { min-height: 0; }
+  .hero h1 { font-size: 32px; }
+
+  .hero__grid,
+  .card-grid--2,
+  .contact__grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero__grid .frame { max-width: 420px; }
+
+  .card-grid,
+  .article-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .btn-row .btn { flex: 1 1 100%; }
+  .contact__form { padding: 24px; }
+
+  .speed-dial { right: 16px; bottom: 16px; }
+}
+
+/* Nav switch — deliberately NOT the layout tiers' 860px. Measured in-browser
+   that at the design's 19px nav font + gap + สินค้าและบริการ + บทความ, the
+   desktop row wraps to two lines around 900-920px. 940px clears that band;
+   the ~80px range where content already uses the 859px layout tier but the
+   header still shows the full desktop dropdown is intentional, not a bug. */
+@media (max-width: 940px) {
+  .nav-toggle { display: grid; }
+  .site-nav { display: none; }
+  .mobile-nav:not([hidden]) { display: flex; }
+
+  .header-bar { position: relative; }
+}

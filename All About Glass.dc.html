@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<title>All About Glass - รับติดตั้งกระจก อลูมิเนียม ศรีราชา ชลบุรี</title>
+<meta name="description" content="All About Glass ผู้เชี่ยวชาญงานกระจกและอลูมิเนียมครบวงจร ศรีราชา ชลบุรี บริการติดตั้งกระจกอาคาร กระจกเทมเปอร์นิรภัย บานอลูมิเนียม บานเฟอร์นิเจอร์ ราวกันตก ให้คำปรึกษาฟรี">
+<meta name="keywords" content="กระจก, อลูมิเนียม, กระจกเทมเปอร์, กระจกนิรภัย, กระจกลามิเนต, ติดตั้งกระจก, ศรีราชา, ชลบุรี, All About Glass">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;font-family:'Sarabun',sans-serif;background:#fbfbfc;color:#12233f}
+  a{color:#0f2f5c;text-decoration:none}
+  a:hover{color:#1d4e8f}
+  ::selection{background:#0f2f5c;color:#fff}
+  @keyframes ctaWiggle{0%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.15) rotate(45deg)}100%{transform:scale(1.1) rotate(-45deg)}}
+  @keyframes ctaItemIn{0%{opacity:0;transform:translate(0,0) scale(0.4)}100%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}}
+  @keyframes ctaItemOut{0%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}100%{opacity:0;transform:translate(0,0) scale(0.4)}}
+</style>
+</helmet>
+
+<div style="width:100%;background:#fbfbfc;overflow-x:hidden;font-family:{{ fontFamily }}">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(251,251,252,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(15,47,92,0.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:11px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="javascript:void(0)" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;height:58px;overflow:hidden">
+        <img src="uploads/LINE_ALBUM_2026.7.21_260721_1.jpg" alt="All About Glass logo" style="height:104px;width:auto;object-fit:cover;object-position:center">
+      </a>
+      <sc-if value="{{ isDesktopNav }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;gap:20px;font-size:{{ menuFontSize }}px;font-weight:500;white-space:nowrap">
+        <a href="javascript:void(0)" onClick="{{ goTo.home }}" style="{{ navStyle.home }}">หน้าแรก</a>
+        <a href="javascript:void(0)" onClick="{{ goTo.about }}" style="{{ navStyle.about }}">เกี่ยวกับเรา</a>
+        <div style="position:relative;white-space:nowrap" onMouseEnter="{{ openSubmenu }}" onMouseLeave="{{ closeSubmenu }}">
+          <a href="javascript:void(0)" onClick="{{ goTo.services }}" style="{{ navStyle.services }}">สินค้าและบริการ</a>
+          <sc-if value="{{ submenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:100%;left:0;padding-top:14px;z-index:60">
+              <div style="background:#fff;border:1px solid rgba(15,47,92,0.12);border-radius:4px;box-shadow:0 12px 32px rgba(15,47,92,0.15);min-width:180px;overflow:hidden">
+                <a href="javascript:void(0)" onClick="{{ goTo.products }}" style="display:block;padding:12px 20px;font-weight:500;color:#12233f" style-hover="background:#f0f3f9">สินค้า</a>
+                <a href="javascript:void(0)" onClick="{{ goTo.services }}" style="display:block;padding:12px 20px;font-weight:500;color:#12233f;border-top:1px solid rgba(15,47,92,0.08)" style-hover="background:#f0f3f9">บริการต่างๆ</a>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <a href="javascript:void(0)" onClick="{{ goTo.gallery }}" style="{{ navStyle.gallery }}">ผลงาน</a>
+        <a href="javascript:void(0)" onClick="{{ goTo.articles }}" style="{{ navStyle.articles }}">บทความ</a>
+        <a href="javascript:void(0)" onClick="{{ goTo.contact }}" style="{{ navStyle.contact }}">ติดต่อเรา</a>
+      </nav>
+      <a href="javascript:void(0)" onClick="{{ goTo.contact }}" style="background:#0f2f5c;color:#fff;padding:10px 18px;border-radius:2px;font-size:14px;font-weight:600;white-space:nowrap;flex-shrink:0" style-hover="background:#1d4e8f">ขอใบเสนอราคา</a>
+      </sc-if>
+      <sc-if value="{{ isMobileNav }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMobileMenu }}" style="width:40px;height:40px;border:none;background:transparent;display:flex;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;flex-shrink:0">
+          <span style="display:block;height:2px;background:#0f2f5c;border-radius:1px"></span>
+          <span style="display:block;height:2px;background:#0f2f5c;border-radius:1px"></span>
+          <span style="display:block;height:2px;background:#0f2f5c;border-radius:1px"></span>
+        </button>
+      </sc-if>
+    </div>
+    <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="display:flex;flex-direction:column;padding:8px 24px 20px;font-size:17px;font-weight:500;border-top:1px solid rgba(15,47,92,0.08)">
+        <a href="javascript:void(0)" onClick="{{ goToMobile.home }}" style="padding:12px 0">หน้าแรก</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.about }}" style="padding:12px 0">เกี่ยวกับเรา</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.products }}" style="padding:12px 0">สินค้า</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.services }}" style="padding:12px 0">บริการต่างๆ</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.gallery }}" style="padding:12px 0">ผลงาน</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.articles }}" style="padding:12px 0">บทความ</a>
+        <a href="javascript:void(0)" onClick="{{ goToMobile.contact }}" style="padding:12px 0;color:#0f2f5c;font-weight:700">ติดต่อเรา / ขอใบเสนอราคา</a>
+      </nav>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <!-- HERO -->
+  <section id="home" style="position:relative;min-height:640px;display:flex;align-items:center;background:linear-gradient(120deg,#0a2545 0%,#0f2f5c 55%,#1d4e8f 100%);overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 90px);pointer-events:none"></div>
+    <div style="max-width:1240px;margin:0 auto;padding:{{ heroPadding }};width:100%;position:relative;z-index:2;display:grid;grid-template-columns:{{ gridCols2 }};gap:48px;align-items:center">
+      <div>
+        <div style="display:inline-block;padding:6px 16px;border:1px solid rgba(255,255,255,0.35);border-radius:2px;color:#cfe0ff;font-size:13px;letter-spacing:1px;margin-bottom:24px">ผู้เชี่ยวชาญด้านงานกระจกครบวงจร</div>
+        <h1 style="font-size:{{ h1Size }};line-height:1.25;color:#fff;font-weight:700;margin:0 0 20px">รับติดตั้งกระจกและอลูมิเนียม<br>ศรีราชา ชลบุรี ครบวงจร</h1>
+        <p style="font-size:17px;line-height:1.7;color:#c9d7ec;max-width:520px;margin:0 0 32px">All About Glass ผู้เชี่ยวชาญงานกระจกและอลูมิเนียมในพื้นที่ศรีราชาและชลบุรี ให้บริการออกแบบ ผลิต และติดตั้งกระจกอาคาร หน้าต่าง-ประตู กระจกเทมเปอร์นิรภัย กระจกลามิเนต บานเฟอร์นิเจอร์ และราวกันตก โดยทีมช่างมืออาชีพ พร้อมให้คำปรึกษาฟรี</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <a href="javascript:void(0)" onClick="{{ goTo.contact }}" style="background:#fff;color:#0f2f5c;padding:14px 30px;border-radius:2px;font-weight:600;font-size:15px" style-hover="background:#cfe0ff">ติดต่อสอบถาม</a>
+          <a href="javascript:void(0)" onClick="{{ goTo.services }}" style="border:1px solid rgba(255,255,255,0.4);color:#fff;padding:14px 30px;border-radius:2px;font-weight:600;font-size:15px" style-hover="border-color:#fff">ดูบริการทั้งหมด</a>
+        </div>
+      </div>
+      <div style="position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);background:repeating-linear-gradient(135deg,#16376b,#16376b 14px,#1c4079 14px,#1c4079 28px);display:flex;align-items:center;justify-content:center">
+        <span style="color:rgba(255,255,255,0.7);font-family:ui-monospace,monospace;font-size:13px;text-align:center;padding:0 20px">[ ภาพผลงานอาคาร / กระจกหน้าร้าน ]</span>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <!-- ABOUT -->
+  <section id="about" style="max-width:1240px;margin:0 auto;padding:{{ sectionPadding }};display:grid;grid-template-columns:{{ gridColsAbout }};gap:64px;align-items:center">
+    <div style="aspect-ratio:1/1;border-radius:4px;background:repeating-linear-gradient(115deg,#e7edf6,#e7edf6 14px,#dbe4f2 14px,#dbe4f2 28px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(15,47,92,0.1)">
+      <span style="color:#5a6f8f;font-family:ui-monospace,monospace;font-size:13px;text-align:center;padding:0 20px">[ ภาพทีมงาน / โรงงาน ]</span>
+    </div>
+    <div>
+      <div style="color:#1d4e8f;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">เกี่ยวกับเรา</div>
+      <h2 style="font-size:36px;font-weight:700;margin:0 0 24px;line-height:1.3">บริษัท ออล อะเบ้าท์ กลาส จำกัด — ผู้เชี่ยวชาญงานกระจก ศรีราชา ชลบุรี</h2>
+      <p style="font-size:16px;line-height:1.9;color:#3a4a63;margin:0 0 20px">เราคือ glass solution ที่ช่วยแก้ไขปัญหาให้กับลูกค้าทุกท่าน เรายินดีให้คำปรึกษาเพื่อให้ลูกค้าตัดสินใจเลือกกระจกและอลูมิเนียมที่เหมาะสม ตรงกับความต้องการ</p>
+      <p style="font-size:16px;line-height:1.9;color:#3a4a63;margin:0 0 20px">สินค้าและบริการหลักของเราคือ จัดจำหน่ายกระจกทุกประเภท ตั้งแต่งานกระจกอาคาร หน้าต่าง-ประตู กระจกเทมเปอร์/นิรภัยสำหรับบ้าน งานตกแต่งภายในอย่างผนังกระจก บันได ราวกันตก ไปจนถึงกระจกลามิเนตและกระจกเฟอร์นิเจอร์ เช่น โต๊ะ ตู้ และชั้นวาง</p>
+      <p style="font-size:16px;line-height:1.9;color:#3a4a63;margin:0 0 32px">ด้วยทีมช่างที่มีประสบการณ์ และการดูแลตั้งแต่ให้คำปรึกษา วัดพื้นที่หน้างาน จนถึงติดตั้งเสร็จสมบูรณ์ เราตั้งใจส่งมอบงานที่ได้มาตรฐาน ปลอดภัย และตรงต่อเวลาให้กับลูกค้าทุกราย</p>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+  <!-- SERVICES -->
+  <section id="services" style="background:#f0f3f9;padding:100px 32px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+        <div style="color:#1d4e8f;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">บริการของเรา</div>
+        <h2 style="font-size:36px;font-weight:700;margin:0 0 16px;line-height:1.3">บริการติดตั้งกระจกและอลูมิเนียม ศรีราชา ชลบุรี</h2>
+        <p style="font-size:16px;line-height:1.7;color:#5a6f8f;margin:0">รับติดตั้งงานกระจกและอลูมิเนียมทุกรูปแบบ ตั้งแต่งานอาคารขนาดใหญ่ ไปจนถึงงานตกแต่งภายในบ้าน</p>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ gridCols2 }};gap:28px">
+        <sc-for list="{{ serviceList }}" as="svc" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid rgba(15,47,92,0.08);border-radius:4px;padding:36px 28px;display:flex;flex-direction:column;gap:14px">
+            <div style="width:44px;height:44px;border-radius:2px;background:#0f2f5c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px">{{ svc.num }}</div>
+            <h3 style="font-size:19px;font-weight:600;margin:0">{{ svc.title }}</h3>
+            <p style="font-size:14.5px;line-height:1.7;color:#5a6f8f;margin:0">{{ svc.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ false }}">
+  <!-- PRODUCTS -->
+  <section id="products" style="max-width:1240px;margin:0 auto;padding:{{ sectionPadding }}">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+      <div style="color:#1d4e8f;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">สินค้าของเรา</div>
+      <h2 style="font-size:36px;font-weight:700;margin:0 0 16px;line-height:1.3">กระจกทุกประเภท จำหน่ายและติดตั้งโดย All About Glass</h2>
+      <p style="font-size:16px;line-height:1.7;color:#5a6f8f;margin:0">เลือกชนิดกระจกที่เหมาะกับงานของคุณ พร้อมบริการให้คำปรึกษาโดยทีมผู้เชี่ยวชาญ</p>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ gridCols3 }};gap:28px">
+      <sc-for list="{{ productList }}" as="p" hint-placeholder-count="6">
+        <div style="background:#fff;border:1px solid rgba(15,47,92,0.08);border-radius:4px;padding:36px 28px;display:flex;flex-direction:column;gap:14px">
+          <div style="width:44px;height:44px;border-radius:2px;background:#1d4e8f;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px">{{ p.num }}</div>
+          <h3 style="font-size:19px;font-weight:600;margin:0">{{ p.title }}</h3>
+          <p style="font-size:14.5px;line-height:1.7;color:#5a6f8f;margin:0">{{ p.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+  <!-- GALLERY -->
+  <section id="gallery" style="max-width:1240px;margin:0 auto;padding:{{ sectionPadding }}">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+      <div style="color:#1d4e8f;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">ผลงานของเรา</div>
+      <h2 style="font-size:36px;font-weight:700;margin:0;line-height:1.3">ตัวอย่างผลงานที่ผ่านมา</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ gridColsGallery }};gap:20px">
+      <sc-for list="{{ galleryList }}" as="g" hint-placeholder-count="8">
+        <div style="aspect-ratio:1/1;border-radius:3px;overflow:hidden;background:repeating-linear-gradient(115deg,#e7edf6,#e7edf6 12px,#dbe4f2 12px,#dbe4f2 24px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(15,47,92,0.08)">
+          <span style="color:#5a6f8f;font-family:ui-monospace,monospace;font-size:11px;text-align:center;padding:0 10px">{{ g.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isArticles }}" hint-placeholder-val="{{ false }}">
+  <!-- ARTICLES -->
+  <section id="articles" style="max-width:1240px;margin:0 auto;padding:{{ sectionPadding }}">
+    <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+      <div style="color:#1d4e8f;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">บทความ</div>
+      <h2 style="font-size:36px;font-weight:700;margin:0;line-height:1.3">สาระความรู้เกี่ยวกับกระจกและอลูมิเนียม</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ gridCols3 }};gap:28px">
+      <sc-for list="{{ articleList }}" as="a" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid rgba(15,47,92,0.08);border-radius:4px;overflow:hidden">
+          <div style="aspect-ratio:16/10;background:repeating-linear-gradient(115deg,#e7edf6,#e7edf6 12px,#dbe4f2 12px,#dbe4f2 24px);display:flex;align-items:center;justify-content:center">
+            <span style="color:#5a6f8f;font-family:ui-monospace,monospace;font-size:11px">[ ภาพประกอบ ]</span>
+          </div>
+          <div style="padding:24px">
+            <h3 style="font-size:18px;font-weight:600;margin:0 0 10px">{{ a.title }}</h3>
+            <p style="font-size:14px;line-height:1.7;color:#5a6f8f;margin:0">{{ a.desc }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <!-- CONTACT -->
+  <section id="contact" style="background:#0f2f5c;padding:{{ sectionPadding }};color:#fff">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:{{ gridCols2 }};gap:64px">
+      <div>
+        <div style="color:#9fbaea;font-weight:600;font-size:14px;letter-spacing:1px;margin-bottom:12px">ติดต่อเรา</div>
+        <h2 style="font-size:36px;font-weight:700;margin:0 0 24px;line-height:1.3">พร้อมให้คำปรึกษางานกระจกของคุณ</h2>
+        <div style="display:flex;flex-direction:column;gap:22px;font-size:16px;line-height:1.7">
+          <div>
+            <div style="font-size:13px;color:#9fbaea;margin-bottom:4px">ที่อยู่บริษัท</div>
+            <div>บริษัท ออล อะเบ้าท์ กลาส จำกัด<br>127/26 ต.สุรศักดิ์ อ.ศรีราชา จ.ชลบุรี 20110</div>
+          </div>
+          <div>
+            <div style="font-size:13px;color:#9fbaea;margin-bottom:4px">โทรศัพท์</div>
+            <a href="tel:0629646492" style="color:#fff">062-964-6492</a>
+          </div>
+          <div>
+            <div style="font-size:13px;color:#9fbaea;margin-bottom:4px">LINE</div>
+            <div>allaboutglass</div>
+          </div>
+          <div>
+            <div style="font-size:13px;color:#9fbaea;margin-bottom:4px">Facebook</div>
+            <div>allaboutglassth</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:36px;display:flex;flex-direction:column;gap:18px">
+        <input placeholder="ชื่อ-นามสกุล" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit">
+        <input placeholder="เบอร์โทรศัพท์" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit">
+        <textarea placeholder="รายละเอียดงานที่ต้องการ" rows="4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:2px;padding:14px 16px;color:#fff;font-size:15px;font-family:inherit;resize:none"></textarea>
+        <label style="display:flex;flex-direction:column;gap:8px;background:rgba(255,255,255,0.08);border:1px dashed rgba(255,255,255,0.35);border-radius:2px;padding:14px 16px;color:#cfe0ff;font-size:13px;cursor:pointer">
+          <span style="white-space:nowrap">แนบไฟล์ (รูปภาพ/แบบ) ถ้ามี — ไม่เกิน 10 MB</span>
+          <input type="file" onChange="{{ handleFileChange }}" style="color:#cfe0ff;font-size:13px;width:100%">
+        </label>
+        <sc-if value="{{ fileName }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:13px;color:#9fbaea">ไฟล์ที่แนบ: {{ fileName }}</div>
+        </sc-if>
+        <sc-if value="{{ fileError }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:13px;color:#ffb4b4">{{ fileError }}</div>
+        </sc-if>
+        <button style="background:#fff;color:#0f2f5c;padding:14px;border:none;border-radius:2px;font-weight:600;font-size:15px;cursor:pointer" style-hover="background:#cfe0ff">ส่งข้อความ</button>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- FOOTER -->
+  <footer style="background:#0a2545;padding:32px;text-align:center;color:#7f9bd0;font-size:13px">
+    © 2026 All About Glass Co., Ltd. — บริษัท ออล อะเบ้าท์ กลาส จำกัด — ผู้เชี่ยวชาญงานกระจก — All rights reserved.
+  </footer>
+
+  <!-- FLOATING CTA -->
+  <div onMouseEnter="{{ openCtaHover }}" onMouseLeave="{{ closeCtaHover }}" style="position:fixed;right:24px;bottom:24px;z-index:100;width:140px;height:140px;pointer-events:auto">
+    <sc-if value="{{ ctaVisible }}" hint-placeholder-val="{{ false }}">
+      <a href="tel:0629646492" title="โทร 062-964-6492" style="position:absolute;right:4px;bottom:4px;width:52px;height:52px;border-radius:50%;background:#0f2f5c;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(15,47,92,0.35);animation:{{ ctaAnim }} 0.4s cubic-bezier(0.34,1.56,0.64,1) both;animation-delay:0.02s;--tx:-8px;--ty:-92px" style-hover="background:#1d4e8f">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z" fill="#fff"/></svg>
+      </a>
+      <a href="https://line.me/ti/p/~allaboutglass" target="_blank" rel="noopener" title="LINE: allaboutglass" style="position:absolute;right:4px;bottom:4px;width:52px;height:52px;border-radius:50%;background:#06c755;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(6,199,85,0.35);animation:{{ ctaAnim }} 0.4s cubic-bezier(0.34,1.56,0.64,1) both;animation-delay:0.08s;--tx:-76px;--ty:-64px" style-hover="background:#05b34c">
+        <span style="font-weight:700;font-size:14px">LINE</span>
+      </a>
+      <a href="https://facebook.com/allaboutglassth" target="_blank" rel="noopener" title="Facebook: allaboutglassth" style="position:absolute;right:4px;bottom:4px;width:52px;height:52px;border-radius:50%;background:#1877f2;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(24,119,242,0.35);animation:{{ ctaAnim }} 0.4s cubic-bezier(0.34,1.56,0.64,1) both;animation-delay:0.14s;--tx:-96px;--ty:4px" style-hover="background:#1567d3">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.13-2.4-.13-2.4 0-4 1.46-4 4.15V9.9H7.6V13h2.7v8h3.2z" fill="#fff"/></svg>
+      </a>
+    </sc-if>
+    <button style="position:absolute;right:0;bottom:0;width:60px;height:60px;border-radius:50%;background:#0f2f5c;color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(15,47,92,0.4);cursor:pointer;transition:background 0.25s ease;z-index:2" style-hover="background:#1d4e8f;animation:ctaWiggle 0.6s ease-in-out infinite alternate">
+      <sc-if value="{{ ctaOpenSvg }}" hint-placeholder-val="{{ false }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </sc-if>
+      <sc-if value="{{ ctaClosedSvg }}" hint-placeholder-val="{{ true }}">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c0-.8.7-1.5 1.5-1.5h2.3c.7 0 1.3.5 1.5 1.1l1 3.2c.2.6 0 1.3-.5 1.7l-1.4 1.2c1 2.1 2.7 3.8 4.8 4.8l1.2-1.4c.4-.5 1.1-.7 1.7-.5l3.2 1c.6.2 1.1.8 1.1 1.5v2.3c0 .8-.7 1.5-1.5 1.5C10.6 20.4 3.6 13.4 4 5.5z" fill="#fff"/></svg>
+      </sc-if>
+    </button>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;fontFamily&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;'Sarabun',sans-serif&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;'Sarabun',sans-serif&quot;,&quot;'Prompt',sans-serif&quot;,&quot;'Noto Sans Thai',sans-serif&quot;,&quot;'Kanit',sans-serif&quot;,&quot;'Mitr',sans-serif&quot;],&quot;section&quot;:&quot;Typography&quot;},&quot;menuFontSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:19,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:12,&quot;max&quot;:22,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;section&quot;:&quot;Typography&quot;}}">
+class Component extends DCLogic {
+  state = { page: 'home', submenuOpen: false, fileName: '', fileError: '', ctaOpen: false, ctaVisible: false, mobileMenuOpen: false, width: typeof window !== 'undefined' ? window.innerWidth : 1280 };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ width: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  closeCta() {
+    clearTimeout(this._ctaTimer);
+    clearTimeout(this._ctaHideTimer);
+    this.setState({ ctaOpen: false });
+    this._ctaHideTimer = setTimeout(() => this.setState({ ctaVisible: false }), 350);
+  }
+
+  navLink(active) {
+    return active
+      ? 'color:#0f2f5c;font-weight:700;border-bottom:2px solid #0f2f5c;padding-bottom:2px'
+      : 'color:#12233f';
+  }
+
+  renderVals() {
+    const page = this.state.page;
+    const isMobile = this.state.width < 860;
+    const isNarrow = this.state.width < 700;
+    const set = (p) => () => { this.setState({ page: p }); window.scrollTo(0, 0); };
+    const setMobile = (p) => () => { this.setState({ page: p, mobileMenuOpen: false }); window.scrollTo(0, 0); };
+    const goTo = { home: set('home'), about: set('about'), services: set('services'), products: set('products'), gallery: set('gallery'), articles: set('articles'), contact: set('contact') };
+    const goToMobile = { home: setMobile('home'), about: setMobile('about'), services: setMobile('services'), products: setMobile('products'), gallery: setMobile('gallery'), articles: setMobile('articles'), contact: setMobile('contact') };
+    const navStyle = {
+      home: this.navLink(page === 'home'),
+      about: this.navLink(page === 'about'),
+      services: this.navLink(page === 'services' || page === 'products'),
+      articles: this.navLink(page === 'articles'),
+      gallery: this.navLink(page === 'gallery'),
+      contact: this.navLink(page === 'contact'),
+    };
+    const serviceList = [
+      {num:'01', title:'ติดตั้งบานอลูมิเนียมภายในแบบต่างๆ', desc:'บริการติดตั้งบานอลูมิเนียมสำหรับงานภายใน หลากหลายรูปแบบตามความต้องการ'},
+      {num:'02', title:'ติดตั้งบานเฟอร์นิเจอร์แบบต่างๆ', desc:'บริการติดตั้งบานเฟอร์นิเจอร์กระจก โต๊ะ ตู้ ชั้นวาง ตามแบบที่ต้องการ'},
+      {num:'03', title:'ติดตั้งกระจกอาคาร ราวกันตก ฯลฯ', desc:'บริการติดตั้งกระจกอาคาร ผนังกระจก และราวกันตก งานขนาดใหญ่ครบวงจร'},
+      {num:'04', title:'ติดตั้งแบบอื่นๆ', desc:'รับติดตั้งงานกระจกและอลูมิเนียมตามความต้องการเฉพาะของลูกค้า'},
+    ];
+    const productList = [
+      {num:'01', title:'กระจกใส (Clear Glass)', desc:'กระจกใสมาตรฐานสำหรับงานหน้าต่าง ประตู และผนังทั่วไป'},
+      {num:'02', title:'กระจกเทมเปอร์/นิรภัย', desc:'กระจกนิรภัยเทมเปอร์ ทนแรงกระแทก แตกแล้วไม่บาด'},
+      {num:'03', title:'กระจกลามิเนต/นิรภัย', desc:'กระจกนิรภัยหลายชั้น เพิ่มความปลอดภัยและลดเสียง'},
+      {num:'04', title:'กระจกฝ้า/กระจกลาย', desc:'กระจกสำหรับงานตกแต่งที่ต้องการความเป็นส่วนตัว'},
+      {num:'05', title:'กระจกสี/กระจกทึบ', desc:'กระจกสีสำหรับงานตกแต่งภายในและภายนอกอาคาร'},
+    ];
+    const galleryList = Array.from({length:8}, (_,i)=>({label:`[ ผลงาน ${i+1} ]`}));
+    const articleList = [
+      {title:'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ', desc:'แนะนำการเลือกชนิดกระจกให้เหมาะกับการใช้งานแต่ละพื้นที่'},
+      {title:'กระจกเทมเปอร์ vs กระจกลามิเนต ต่างกันอย่างไร', desc:'เปรียบเทียบคุณสมบัติและความปลอดภัยของกระจกทั้งสองชนิด'},
+      {title:'ไอเดียตกแต่งบ้านด้วยงานกระจก', desc:'รวมไอเดียการใช้กระจกเพื่อเพิ่มความสวยงามและโปร่งโล่ง'},
+    ];
+    return {
+      isDesktopNav: !isMobile,
+      isMobileNav: isMobile,
+      mobileMenuOpen: isMobile && this.state.mobileMenuOpen,
+      toggleMobileMenu: () => this.setState(s => ({ mobileMenuOpen: !s.mobileMenuOpen })),
+      goToMobile,
+      gridCols2: isNarrow ? '1fr' : 'repeat(2,1fr)',
+      gridCols3: isNarrow ? '1fr' : (isMobile ? 'repeat(2,1fr)' : 'repeat(3,1fr)'),
+      gridColsGallery: isNarrow ? 'repeat(2,1fr)' : (isMobile ? 'repeat(3,1fr)' : 'repeat(4,1fr)'),
+      gridColsAbout: isMobile ? '1fr' : '0.85fr 1.15fr',
+      heroPadding: isNarrow ? '56px 20px' : (isMobile ? '72px 24px' : '100px 32px'),
+      sectionPadding: isNarrow ? '56px 20px' : (isMobile ? '72px 24px' : '100px 32px'),
+      h1Size: isNarrow ? '32px' : (isMobile ? '40px' : '52px'),
+      serviceList, productList, galleryList, articleList, goTo, navStyle,
+      goHome: set('home'),
+      openSubmenu: () => this.setState({ submenuOpen: true }),
+      closeSubmenu: () => this.setState({ submenuOpen: false }),
+      submenuOpen: this.state.submenuOpen,
+      ctaOpen: this.state.ctaOpen,
+      ctaOpenSvg: this.state.ctaOpen,
+      ctaClosedSvg: !this.state.ctaOpen,
+      openCtaHover: () => {
+        clearTimeout(this._ctaHideTimer);
+        this.setState({ ctaOpen: true, ctaVisible: true });
+      },
+      closeCtaHover: () => this.closeCta(),
+      ctaVisible: this.state.ctaVisible,
+      ctaAnim: this.state.ctaOpen ? 'ctaItemIn' : 'ctaItemOut',
+      fileName: this.state.fileName,
+      fileError: this.state.fileError,
+      handleFileChange: (e) => {
+        const f = e.target.files[0];
+        if (!f) { this.setState({ fileName: '', fileError: '' }); return; }
+        if (f.size > 10 * 1024 * 1024) {
+          this.setState({ fileName: '', fileError: 'ไฟล์มีขนาดเกิน 10 MB กรุณาเลือกไฟล์ใหม่' });
+          e.target.value = '';
+        } else {
+          this.setState({ fileName: f.name, fileError: '' });
+        }
+      },
+      isHome: page === 'home',
+      isAbout: page === 'about',
+      isServices: page === 'services',
+      isProducts: page === 'products',
+      isGallery: page === 'gallery',
+      isArticles: page === 'articles',
+      isContact: page === 'contact',
+      fontFamily: this.props.fontFamily ?? "'Sarabun',sans-serif",
+      menuFontSize: this.props.menuFontSize ?? 16,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
