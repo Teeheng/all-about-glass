@@ -124,13 +124,20 @@ the hero image, the about image, eight gallery tiles, and three article thumbnai
 Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
 photos are available.
 
-**Hero intro video** (`uploads/intro AAG.mp4`, ~450 KB, 6s, 540×540) plays in the hero in
-place of a static image — the toggle to switch back to an image exists in the design's
-state machine but isn't wired to any visible control, so in practice the design always
-shows the video. `DesignSync`'s file read is capped at 256 KiB, well under this file's
-size — every fetch through it came back truncated and unplayable, so the file was instead
-copied directly from the source network share and verified to decode fully
-(`video.readyState === 4`, no `video.error`) before shipping.
+**Hero intro video** (`uploads/intro AAG.mp4`, ~204 KB, 5.9s, 540×540) autoplays, loops,
+and is muted (loop requires muted to autoplay in Chrome/Safari) in the hero's media box,
+which is sized to the video's own 1:1 ratio so it fills edge-to-edge — the design's box was
+4:5, sized for a portrait photo, and would letterbox this square video with bars top and
+bottom. `DesignSync`'s file read is capped at 256 KiB, well under the original ~450 KB
+source — every fetch through it came back truncated and unplayable, so the file was
+instead copied directly from the source network share.
+
+The source file also had ~0.12s of solid black baked into its last frames (confirmed by
+sampling frame brightness via canvas at second-level precision, not guessed) — invisible on
+a single playthrough, but a visible black flash every time `loop` restarted it. Re-encoded
+with ffmpeg (`-t 5.9`, trimming just past the last bright frame at ~5.95s) to remove it, so
+looping is seamless. If the source video is ever replaced, re-check for the same trailing
+black frames — it's a common fade-out left over from export, not specific to this file.
 
 **Contact form** submits to Formspree (`data-endpoint="https://formspree.io/f/mvzedodb"`
 in `index.html`). `app.js` POSTs JSON (`name`, `phone`, `detail`) and shows a success or
