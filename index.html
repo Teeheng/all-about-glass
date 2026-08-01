@@ -41,7 +41,7 @@
       <a href="#/about" data-route="about">เกี่ยวกับเรา</a>
 
       <div class="has-sub">
-        <a href="#/services" data-active-for="services products" aria-haspopup="true" aria-expanded="false" aria-controls="sub-catalogue">สินค้าและบริการ</a>
+        <a href="#/overview" data-active-for="services products overview" aria-haspopup="true" aria-expanded="false" aria-controls="sub-catalogue">สินค้าและบริการ</a>
         <div class="submenu" id="sub-catalogue">
           <div class="submenu__panel">
             <a href="#/products" data-route="products">สินค้า</a>
@@ -67,8 +67,7 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="เมนูมือถือ" hidden>
     <a href="#/" data-route="home">หน้าแรก</a>
     <a href="#/about" data-route="about">เกี่ยวกับเรา</a>
-    <a href="#/products" data-route="products">สินค้า</a>
-    <a href="#/services" data-route="services">บริการต่างๆ</a>
+    <a href="#/overview" data-active-for="services products overview">สินค้าและบริการ</a>
     <a href="#/gallery" data-route="gallery">ผลงาน</a>
     <a href="#/articles" data-route="articles">บทความ</a>
     <a class="mobile-nav__cta" href="#/contact" data-route="contact">ติดต่อเรา / ขอใบเสนอราคา</a>
@@ -79,7 +78,6 @@
 
   <!-- ══ HOME ══ -->
   <section class="page hero" data-page="home" aria-labelledby="hero-title">
-    <div class="hero__grain" aria-hidden="true"></div>
     <div class="shell hero__grid">
       <div class="hero__copy">
         <p class="eyebrow eyebrow--boxed">ผู้เชี่ยวชาญด้านงานกระจกครบวงจร</p>
@@ -87,12 +85,18 @@
         <p class="hero__lead">All About Glass ผู้เชี่ยวชาญงานกระจกและอลูมิเนียมในพื้นที่ศรีราชาและชลบุรี ให้บริการออกแบบ ผลิต และติดตั้งกระจกอาคาร หน้าต่าง-ประตู กระจกเทมเปอร์นิรภัย กระจกลามิเนต บานเฟอร์นิเจอร์ และราวกันตก โดยทีมช่างมืออาชีพ พร้อมให้คำปรึกษาฟรี</p>
         <div class="btn-row">
           <a class="btn btn--light" href="#/contact">ติดต่อสอบถาม</a>
-          <a class="btn btn--ghost" href="#/services">ดูบริการทั้งหมด</a>
+          <a class="btn btn--ghost" href="#/overview">ดูบริการทั้งหมด</a>
         </div>
       </div>
-      <!-- Placeholder: swap for a real project photo when supplied -->
+      <!--
+        The design now defaults the hero to an intro video
+        (uploads/intro AAG.mp4 in the Claude Design project), but that file
+        is larger than DesignSync's 256 KiB read cap — the fetch came back
+        truncated, so it isn't shipped here. Placeholder stays until the
+        video is supplied directly (e.g. dropped in the repo).
+      -->
       <div class="frame frame--dark frame--portrait">
-        <span>[ ภาพผลงานอาคาร / กระจกหน้าร้าน ]</span>
+        <span>[ วิดีโอ/ภาพแนะนำบริษัท ]</span>
       </div>
     </div>
   </section>
@@ -114,8 +118,33 @@
     </div>
   </section>
 
+  <!-- ══ OVERVIEW (สินค้าและบริการ hub) ══ -->
+  <section class="page section overview" data-page="overview" aria-labelledby="overview-title">
+    <div class="shell">
+      <div class="section__head">
+        <p class="eyebrow">สินค้าและบริการ</p>
+        <h2 id="overview-title">กระจกและอลูมิเนียมครบวงจร ทั้งสินค้าและบริการติดตั้ง</h2>
+        <p class="section__sub">เลือกดูรายละเอียดสินค้ากระจกทุกประเภท หรือบริการติดตั้งของเรา</p>
+      </div>
+      <div class="overview-grid">
+        <a class="overview-card" href="#/products">
+          <span class="overview-card__eyebrow">สินค้า</span>
+          <h3>กระจกทุกประเภท</h3>
+          <p>กระจกใส กระจกเทมเปอร์นิรภัย กระจกนิรภัยลามิเนต กระจกฝ้า และกระจกสี พร้อมให้คำปรึกษาเลือกชนิดที่เหมาะกับงาน</p>
+          <span class="overview-card__cta">ดูสินค้าทั้งหมด →</span>
+        </a>
+        <a class="overview-card" href="#/services">
+          <span class="overview-card__eyebrow">บริการ</span>
+          <h3>บริการติดตั้งครบวงจร</h3>
+          <p>ติดตั้งบานอลูมิเนียม บานเฟอร์นิเจอร์ กระจกอาคาร ราวกันตก โดยทีมช่างมืออาชีพ</p>
+          <span class="overview-card__cta">ดูบริการทั้งหมด →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ SERVICES ══ -->
-  <section class="page section section--panel services" data-page="services" aria-labelledby="services-title">
+  <section class="page section services" data-page="services" aria-labelledby="services-title">
     <div class="shell">
       <div class="section__head">
         <p class="eyebrow">บริการของเรา</p>

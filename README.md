@@ -16,17 +16,28 @@ Then open <http://localhost:4321>. No build step, no dependencies.
 ## Layout
 
 ```
-index.html                      the site (all six pages)
+index.html                      the site (all eight pages)
 assets/css/styles.css           design tokens + layout + responsive rules
 assets/js/app.js                hash router, mobile nav, enquiry form
 uploads/…_1.jpg                 AAG logo (also used as favicon / og:image)
 
 All About Glass.dc.html         imported design source — reference only
 support.js                      dc-runtime for the design source — not used by the site
+image-slot.js                   Claude Design's drag-drop image-placeholder component —
+                                 reference only, not used by the site (see below)
 ```
 
-`All About Glass.dc.html` and `support.js` are the untouched import from Claude Design.
-The shipping site is `index.html`; editing the `.dc.html` does not change it.
+`All About Glass.dc.html`, `support.js`, and `image-slot.js` are the untouched import from
+Claude Design. The shipping site is `index.html`; editing the `.dc.html` does not change it.
+
+**`image-slot.js` is never loaded by `index.html`.** The design now places images via a
+custom `<image-slot>` element — a drag-and-drop placeholder tied to Claude Design's
+`window.omelette` runtime bridge (persists drops to a `.image-slots.state.json` sidecar
+file next to the `.dc.html`). Its own docs say outright: "Outside the omelette runtime the
+slot is read-only." None of that exists on a plain static site, so wherever the design uses
+`<image-slot>`, this build keeps using the pre-existing `.frame` placeholder `<div>` pattern
+instead — same visual treatment, no dependency on tooling that only exists inside the
+design canvas.
 
 ## Re-importing after a design change
 
@@ -37,7 +48,7 @@ is a deliberate edit each time, not a regeneration.
 
 ## How it works
 
-Seven pages live as `<section data-page="…">` in `index.html`. `app.js` shows one at a
+Eight pages live as `<section data-page="…">` in `index.html`. `app.js` shows one at a
 time based on the URL hash, so pages are linkable, bookmarkable, and the browser back
 button works. An unknown hash falls back to home.
 
@@ -45,11 +56,19 @@ button works. An unknown hash falls back to home.
 | --- | --- |
 | หน้าแรก | `#/` |
 | เกี่ยวกับเรา | `#/about` |
+| สินค้าและบริการ (hub) | `#/overview` |
 | สินค้า | `#/products` |
 | บริการ | `#/services` |
 | ผลงาน | `#/gallery` |
 | บทความ | `#/articles` |
 | ติดต่อเรา | `#/contact` |
+
+`/overview` is a hub page — two large link-cards routing to `/products` and `/services`.
+The desktop nav's "สินค้าและบริการ" label now routes here (previously it went straight to
+`/services`); its hover dropdown still links directly to `/products` and `/services`. The
+mobile nav collapsed to a single "สินค้าและบริการ" → `/overview` link — no more separate
+สินค้า/บริการต่างๆ rows. Both link elements use `data-active-for="services products
+overview"` so the parent stays highlighted on any of the three pages.
 
 **Two separate nav elements, not one CSS-reflowed nav.** `#primary-nav` (desktop, shown
 above the nav breakpoint) has the `สินค้าและบริการ` hover/focus dropdown over the products
@@ -90,12 +109,29 @@ buttons. Opens on hover for mouse users, and on click and Escape for touch and k
 hover alone isn't reachable on either, so `app.js` adds those independently of the design
 source, which only wired hover.
 
+**Visual language**: pills, not sharp corners. Buttons, the nav CTA, the eyebrow badge,
+and card number badges are all `border-radius: var(--radius-pill)` (9999px) now; cards and
+images use `var(--radius-lg)` (8px); the hero lost its gradient + diagonal grain texture in
+favour of a flat `#0a1f3d`; h1/h2 dropped from weight 700 to 300 with slight letter-spacing;
+service/product/article cards moved from white-with-border to a flat `#f5f7fa`, no border.
+These are CSS-token changes only — `:root` in `styles.css` gained `--radius-lg` and
+`--radius-pill` alongside the existing `--radius`/`--radius-sm`.
+
 ## Still to wire up
 
 **Photography.** The design ships with placeholder tiles and so does this build —
 the hero image, the about image, eight gallery tiles, and three article thumbnails.
 Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
 photos are available.
+
+**Hero intro video — asset not shipped, too large to fetch.** The design's hero now
+defaults to `uploads/intro AAG.mp4` in place of a static image (the toggle to switch back
+to an image exists in the design's state machine but isn't wired to any visible control, so
+in practice the design always shows the video). `DesignSync`'s file read is capped at 256
+KiB; the video is larger, so every fetch attempt came back truncated and unusable. The hero
+still shows the `.frame` placeholder here until the file is supplied directly — dropped into
+`uploads/`, or sent another way — at which point swap the placeholder for a `<video>` (see
+the HTML comment in `index.html`'s hero section for the exact markup the design specifies).
 
 **Contact form** submits to Formspree (`data-endpoint="https://formspree.io/f/mvzedodb"`
 in `index.html`). `app.js` POSTs JSON (`name`, `phone`, `detail`) and shows a success or

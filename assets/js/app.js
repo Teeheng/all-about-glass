@@ -11,6 +11,7 @@
   var ROUTES = {
     home:     { hash: '#/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม ศรีราชา ชลบุรี' },
     about:    { hash: '#/about',    title: 'เกี่ยวกับเรา — ' + SITE_NAME },
+    overview: { hash: '#/overview', title: 'สินค้าและบริการ — ' + SITE_NAME },
     services: { hash: '#/services', title: 'บริการ — ' + SITE_NAME },
     products: { hash: '#/products', title: 'สินค้า — ' + SITE_NAME },
     gallery:  { hash: '#/gallery',  title: 'ผลงาน — ' + SITE_NAME },
