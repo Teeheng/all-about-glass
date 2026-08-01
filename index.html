@@ -88,15 +88,8 @@
           <a class="btn btn--ghost" href="#/overview">ดูบริการทั้งหมด</a>
         </div>
       </div>
-      <!--
-        The design now defaults the hero to an intro video
-        (uploads/intro AAG.mp4 in the Claude Design project), but that file
-        is larger than DesignSync's 256 KiB read cap — the fetch came back
-        truncated, so it isn't shipped here. Placeholder stays until the
-        video is supplied directly (e.g. dropped in the repo).
-      -->
-      <div class="frame frame--dark frame--portrait">
-        <span>[ วิดีโอ/ภาพแนะนำบริษัท ]</span>
+      <div class="hero__media">
+        <video class="hero__video" src="uploads/intro%20AAG.mp4" controls preload="metadata"></video>
       </div>
     </div>
   </section>

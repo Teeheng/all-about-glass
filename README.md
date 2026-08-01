@@ -124,14 +124,13 @@ the hero image, the about image, eight gallery tiles, and three article thumbnai
 Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
 photos are available.
 
-**Hero intro video — asset not shipped, too large to fetch.** The design's hero now
-defaults to `uploads/intro AAG.mp4` in place of a static image (the toggle to switch back
-to an image exists in the design's state machine but isn't wired to any visible control, so
-in practice the design always shows the video). `DesignSync`'s file read is capped at 256
-KiB; the video is larger, so every fetch attempt came back truncated and unusable. The hero
-still shows the `.frame` placeholder here until the file is supplied directly — dropped into
-`uploads/`, or sent another way — at which point swap the placeholder for a `<video>` (see
-the HTML comment in `index.html`'s hero section for the exact markup the design specifies).
+**Hero intro video** (`uploads/intro AAG.mp4`, ~450 KB, 6s, 540×540) plays in the hero in
+place of a static image — the toggle to switch back to an image exists in the design's
+state machine but isn't wired to any visible control, so in practice the design always
+shows the video. `DesignSync`'s file read is capped at 256 KiB, well under this file's
+size — every fetch through it came back truncated and unplayable, so the file was instead
+copied directly from the source network share and verified to decode fully
+(`video.readyState === 4`, no `video.error`) before shipping.
 
 **Contact form** submits to Formspree (`data-endpoint="https://formspree.io/f/mvzedodb"`
 in `index.html`). `app.js` POSTs JSON (`name`, `phone`, `detail`) and shows a success or
