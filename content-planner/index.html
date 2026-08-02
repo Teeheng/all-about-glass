@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Planner — All About Glass</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-name">Content Planner</span>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-view="calendar">ปฏิทิน</button>
+      <button class="tab" data-view="kanban">Kanban</button>
+      <button class="tab" data-view="ideas">คลัง Idea</button>
+      <button class="tab" data-view="ai">AI Assist</button>
+    </nav>
+    <button class="btn ghost" id="theme-toggle" title="สลับธีมสี">🌓</button>
+  </header>
+
+  <main class="views">
+
+    <!-- CALENDAR VIEW -->
+    <section class="view active" id="view-calendar">
+      <div class="view-header">
+        <div class="month-nav">
+          <button class="btn icon" id="cal-prev">‹</button>
+          <h2 id="cal-title">—</h2>
+          <button class="btn icon" id="cal-next">›</button>
+        </div>
+        <button class="btn primary" id="cal-add">+ เพิ่มงาน</button>
+      </div>
+      <div class="calendar-grid" id="cal-weekdays"></div>
+      <div class="calendar-grid" id="cal-grid"></div>
+    </section>
+
+    <!-- KANBAN VIEW -->
+    <section class="view" id="view-kanban">
+      <div class="view-header">
+        <h2>สถานะงาน Content</h2>
+        <button class="btn primary" id="kanban-add">+ เพิ่มงาน</button>
+      </div>
+      <div class="kanban-board" id="kanban-board">
+        <div class="kanban-col" data-status="idea">
+          <div class="kanban-col-head"><span>💡 Idea</span><span class="count" id="count-idea">0</span></div>
+          <div class="kanban-list" id="list-idea"></div>
+        </div>
+        <div class="kanban-col" data-status="draft">
+          <div class="kanban-col-head"><span>✏️ Draft</span><span class="count" id="count-draft">0</span></div>
+          <div class="kanban-list" id="list-draft"></div>
+        </div>
+        <div class="kanban-col" data-status="review">
+          <div class="kanban-col-head"><span>👀 Review</span><span class="count" id="count-review">0</span></div>
+          <div class="kanban-list" id="list-review"></div>
+        </div>
+        <div class="kanban-col" data-status="published">
+          <div class="kanban-col-head"><span>✅ Published</span><span class="count" id="count-published">0</span></div>
+          <div class="kanban-list" id="list-published"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDEAS LIBRARY VIEW -->
+    <section class="view" id="view-ideas">
+      <div class="view-header">
+        <h2>คลัง Idea &amp; ธีม Content</h2>
+        <div class="row-gap">
+          <button class="btn ghost" id="theme-manage-btn">🎨 จัดการธีม</button>
+          <button class="btn primary" id="idea-add">+ เพิ่ม Idea</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="idea-search" placeholder="ค้นหา idea, tag, ธีม...">
+        <select id="idea-theme-filter"><option value="">ทุกธีม</option></select>
+      </div>
+      <div class="idea-grid" id="idea-grid"></div>
+    </section>
+
+    <!-- AI ASSIST VIEW -->
+    <section class="view" id="view-ai">
+      <div class="view-header">
+        <h2>AI Assist — ช่วยคิด/เขียน Content</h2>
+      </div>
+
+      <div class="ai-layout">
+        <div class="ai-settings card">
+          <h3>ตั้งค่า Anthropic API Key</h3>
+          <p class="hint">Key จะถูกเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น (localStorage) ไม่ถูกส่งไปที่อื่น ใช้เพื่อเรียก Claude API โดยตรงจากหน้านี้</p>
+          <div class="row-gap">
+            <input type="password" id="api-key-input" placeholder="sk-ant-...">
+            <button class="btn ghost" id="api-key-toggle">👁</button>
+            <button class="btn primary" id="api-key-save">บันทึก</button>
+          </div>
+          <p class="status-line" id="api-key-status"></p>
+        </div>
+
+        <div class="ai-generate card">
+          <h3>สร้างไอเดีย / ร่าง Content</h3>
+          <label>โหมด</label>
+          <select id="ai-mode">
+            <option value="ideas">คิดหัวข้อ/ไอเดีย content</option>
+            <option value="draft">ร่างข้อความ (caption/บทความสั้น)</option>
+            <option value="calendar">วางแผน content 1 เดือน</option>
+          </select>
+          <label>บริบท / โจทย์</label>
+          <textarea id="ai-context" rows="4" placeholder="เช่น: ธุรกิจกระจกและอลูมิเนียม กลุ่มเป้าหมายคือช่าง/ผู้รับเหมา ต้องการโปรโมทช่วงหน้าฝน..."></textarea>
+          <label>แพลตฟอร์ม</label>
+          <select id="ai-platform">
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Line OA">Line OA</option>
+            <option value="Blog">Blog / เว็บไซต์</option>
+            <option value="ทั่วไป">ทั่วไป</option>
+          </select>
+          <button class="btn primary" id="ai-generate-btn">✨ Generate</button>
+          <div class="ai-output" id="ai-output"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ITEM MODAL (used by Calendar + Kanban) -->
+<div class="modal-overlay" id="item-modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="item-modal-title">เพิ่มงาน Content</h3>
+      <button class="btn icon" id="item-modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <label>หัวข้อ</label>
+      <input type="text" id="item-title" placeholder="เช่น โพสต์โปรโมทกระจกลามิเนต">
+      <div class="field-row">
+        <div>
+          <label>แพลตฟอร์ม</label>
+          <select id="item-platform">
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>Line OA</option>
+            <option>Blog</option>
+            <option>อื่นๆ</option>
+          </select>
+        </div>
+        <div>
+          <label>สถานะ</label>
+          <select id="item-status">
+            <option value="idea">Idea</option>
+            <option value="draft">Draft</option>
+            <option value="review">Review</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div>
+          <label>วันที่กำหนดโพสต์</label>
+          <input type="date" id="item-date">
+        </div>
+        <div>
+          <label>ธีม</label>
+          <select id="item-theme"><option value="">— ไม่มี —</option></select>
+        </div>
+      </div>
+      <label>Tags (คั่นด้วยจุลภาค)</label>
+      <input type="text" id="item-tags" placeholder="โปรโมชั่น, หน้าฝน, กระจกนิรภัย">
+      <label>รายละเอียด / โน้ต</label>
+      <textarea id="item-notes" rows="4" placeholder="รายละเอียดเนื้อหา, copy, ลิงก์รูป ฯลฯ"></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger" id="item-delete" style="display:none">ลบ</button>
+      <div class="spacer"></div>
+      <button class="btn ghost" id="item-cancel">ยกเลิก</button>
+      <button class="btn primary" id="item-save">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- THEME MANAGE MODAL -->
+<div class="modal-overlay" id="theme-modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>จัดการธีม Content</h3>
+      <button class="btn icon" id="theme-modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row-gap">
+        <input type="text" id="theme-name-input" placeholder="ชื่อธีม เช่น โปรโมชั่นหน้าฝน">
+        <input type="color" id="theme-color-input" value="#2f9e8f">
+        <button class="btn primary" id="theme-add-btn">+ เพิ่ม</button>
+      </div>
+      <div class="theme-list" id="theme-list"></div>
+    </div>
+    <div class="modal-foot">
+      <div class="spacer"></div>
+      <button class="btn ghost" id="theme-modal-done">เสร็จสิ้น</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
