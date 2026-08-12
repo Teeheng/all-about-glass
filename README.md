@@ -48,7 +48,7 @@ is a deliberate edit each time, not a regeneration.
 
 ## How it works
 
-Eight pages live as `<section data-page="…">` in `index.html`. `app.js` shows one at a
+Eleven pages live as `<section data-page="…">` in `index.html`. `app.js` shows one at a
 time based on the URL hash, so pages are linkable, bookmarkable, and the browser back
 button works. An unknown hash falls back to home.
 
@@ -60,8 +60,18 @@ button works. An unknown hash falls back to home.
 | สินค้า | `#/products` |
 | บริการ | `#/services` |
 | ผลงาน | `#/gallery` |
-| บทความ | `#/articles` |
+| บทความ (listing) | `#/articles` |
+| — วิธีเลือกกระจกให้เหมาะกับบ้าน | `#/article-choosing-glass` |
+| — เทมเปอร์ vs ลามิเนต | `#/article-tempered-laminated` |
+| — ไอเดียตกแต่งบ้านด้วยกระจก | `#/article-decor-ideas` |
 | ติดต่อเรา | `#/contact` |
+
+Each article listing card (`.article-card`) is itself an `<a>` to one of the three detail
+pages — same pattern as `.overview-card`: link-color inheritance is neutralized by setting
+an explicit `color` on the child `h3`/`p`, not by resetting color on the card itself. The
+nav's "บทความ" link uses `data-active-for="articles article-choosing-glass …"` (the
+multi-route group-highlight mechanism `/overview`'s dropdown trigger also uses) so it stays
+highlighted while reading an article, not just on the listing.
 
 `/overview` is a hub page — two large link-cards routing to `/products` and `/services`.
 The desktop nav's "สินค้าและบริการ" label now routes here (previously it went straight to
@@ -120,7 +130,8 @@ These are CSS-token changes only — `:root` in `styles.css` gained `--radius-lg
 ## Still to wire up
 
 **Photography.** The design ships with placeholder tiles and so does this build —
-the hero image, the about image, eight gallery tiles, and three article thumbnails.
+the about image, eight gallery tiles, three article-listing thumbnails, and three
+article-detail cover images (six total between the listing and the full articles).
 Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
 photos are available.
 

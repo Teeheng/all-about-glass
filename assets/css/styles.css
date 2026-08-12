@@ -145,6 +145,7 @@ img { max-width: 100%; display: block; }
 .site-nav a:not(.btn):hover { color: var(--blue); }
 
 .site-nav > a[aria-current="page"],
+.site-nav > a.is-active,
 .has-sub > a.is-active {
   color: var(--navy);
   font-weight: 700;
@@ -492,7 +493,12 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
+.article-grid > li { list-style: none; }
+/* The card is itself the link — reset the base `a{color:var(--navy)}` at
+   the source elements (like .overview-card) rather than on .article-card,
+   so nothing here has to fight link-color inheritance. */
 .article-card {
+  display: block;
   background: #f5f7fa;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -503,8 +509,36 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   box-shadow: 0 12px 28px -18px rgba(15, 47, 92, 0.55);
 }
 .article-card__body { padding: 24px; }
-.article-card__body h3 { font-size: 18px; margin: 0 0 10px; }
+.article-card__body h3 { font-size: 18px; margin: 0 0 10px; color: var(--ink); }
 .article-card__body p { font-size: 14px; line-height: 1.7; color: var(--muted); margin: 0; }
+
+/* ── Article detail ───────────────────────────── */
+
+.article-detail__content {
+  max-width: 760px;
+}
+.article-detail__back {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.article-detail__back:hover { color: var(--blue); }
+.article-detail__cover { margin-bottom: 32px; }
+.article-detail h3 { margin: 32px 0 12px; }
+.article-detail__cta {
+  margin-top: 40px;
+  padding: 28px;
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.article-detail__cta p { margin: 0; font-weight: 600; }
 
 /* ── Contact ──────────────────────────────────── */
 
