@@ -16,6 +16,9 @@
     products: { hash: '#/products', title: 'สินค้า — ' + SITE_NAME },
     gallery:  { hash: '#/gallery',  title: 'ผลงาน — ' + SITE_NAME },
     articles: { hash: '#/articles', title: 'บทความ — ' + SITE_NAME },
+    'article-choosing-glass':     { hash: '#/article-choosing-glass',     title: 'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ — ' + SITE_NAME },
+    'article-tempered-laminated': { hash: '#/article-tempered-laminated', title: 'กระจกเทมเปอร์ vs กระจกลามิเนต — ' + SITE_NAME },
+    'article-decor-ideas':        { hash: '#/article-decor-ideas',        title: 'ไอเดียตกแต่งบ้านด้วยงานกระจก — ' + SITE_NAME },
     contact:  { hash: '#/contact',  title: 'ติดต่อเรา — ' + SITE_NAME }
   };
 
