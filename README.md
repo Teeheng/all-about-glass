@@ -130,10 +130,17 @@ These are CSS-token changes only — `:root` in `styles.css` gained `--radius-lg
 ## Still to wire up
 
 **Photography.** The design ships with placeholder tiles and so does this build —
-the about image, eight gallery tiles, three article-listing thumbnails, and three
-article-detail cover images (six total between the listing and the full articles).
-Each is marked with an HTML comment. Replace the `.frame` divs with `<img>` when real
-photos are available.
+the about image and eight gallery tiles still need real photos.
+
+**Article images are done** (`uploads/articles/*.jpg`) — AI-generated per article
+(prompts written to match the site's navy/white palette and each article's topic,
+images made externally, then dropped in and wired up here), converted from the
+original ~2-3 MB PNGs to ~150-270 KB JPEGs at 1280px wide. `.frame__img` fills the
+existing `.frame frame--wide` placeholder box via `object-fit: cover`, reused for both
+the listing thumbnail and the detail-page cover of the same article — the source images
+are already close to 16:10, so this crops only slightly. Any remaining `.frame` div
+without an `<img>` inside is still a genuine placeholder; replace it with `<img
+class="frame__img" src="…">` inside the existing wrapper when a real photo lands.
 
 **Hero intro video** (`uploads/intro AAG.mp4`, ~204 KB, 5.9s, 540×540) autoplays, loops,
 and is muted (loop requires muted to autoplay in Chrome/Safari) in the hero's media box,
