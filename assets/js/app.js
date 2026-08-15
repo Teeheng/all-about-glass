@@ -9,7 +9,7 @@
   var SITE_NAME = 'All About Glass';
 
   var ROUTES = {
-    home:     { hash: '#/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม ศรีราชา ชลบุรี' },
+    home:     { hash: '#/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม กรุงเทพฯ ปริมณฑล และภาคตะวันออก' },
     about:    { hash: '#/about',    title: 'เกี่ยวกับเรา — ' + SITE_NAME },
     overview: { hash: '#/overview', title: 'สินค้าและบริการ — ' + SITE_NAME },
     services: { hash: '#/services', title: 'บริการ — ' + SITE_NAME },

@@ -149,6 +149,16 @@ is available below 430px viewports, so it was quietly losing its right edge. Add
 font-size step (24px below 429px, `styles.css`) sized with margin for a 320px viewport, not
 just the 375px one tested — check both if this phrase or its font-size changes again.
 
+**Service-area copy is Bangkok/vicinity + Eastern region, not Sriracha-specific.** Per
+request, every marketing mention of "ศรีราชา ชลบุรี" as the target area (`<title>`, meta
+description/keywords, og tags, hero h1/lead, About h2, Services h2, and the matching
+`app.js` route title) now reads "กรุงเทพฯ ปริมณฑล และภาคตะวันออก" instead. The **contact
+section's street address is unchanged** — `127/26 ต.สุรศักดิ์ อ.ศรีราชา จ.ชลบุรี 20110` is
+the company's real registered location, not a marketing claim, so it stays regardless of
+which area the copy is pitching to. `ชลบุรี` alone is kept as one meta keyword since the
+new area still includes it (part of ภาคตะวันออก) and it's where the company is actually
+based — only the headline positioning moved away from naming Sriracha specifically.
+
 ## Still to wire up
 
 **Photography.** The design ships with placeholder tiles and so does this build —
