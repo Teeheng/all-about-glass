@@ -117,7 +117,10 @@ vary it by screen size, so this build doesn't either.
 **Floating speed-dial CTA** (bottom-right, all pages) expands to phone / LINE / Facebook
 buttons. Opens on hover for mouse users, and on click and Escape for touch and keyboard —
 hover alone isn't reachable on either, so `app.js` adds those independently of the design
-source, which only wired hover.
+source, which only wired hover. The main toggle button shows the company logo (`.speed-dial__logo`,
+the same file as the header) rather than an icon that swaps between an open/closed state —
+the design dropped that swap in favour of a single wiggle animation on hover
+(`speed-dial-wiggle`, a five-step rotate shake, `0.4s`), which this build ported exactly.
 
 **Visual language**: pills, not sharp corners. Buttons, the nav CTA, the eyebrow badge,
 and card number badges are all `border-radius: var(--radius-pill)` (9999px) now; cards and
@@ -126,6 +129,16 @@ favour of a flat `#0a1f3d`; h1/h2 dropped from weight 700 to 300 with slight let
 service/product/article cards moved from white-with-border to a flat `#f5f7fa`, no border.
 These are CSS-token changes only — `:root` in `styles.css` gained `--radius-lg` and
 `--radius-pill` alongside the existing `--radius`/`--radius-sm`.
+
+**Not ported: fixed pixel dimensions on the hero.** A later pull of the design source had
+`width: 619px; height: 188px` baked into the h1's inline style, `width: 519px; height: 125px`
+on the lead paragraph, and `width: 443px; height: 438px` on the `<video>` — on top of the
+existing responsive `h1Size`/`gridCols2` values, not replacing them. These read as leftover
+artifacts from resizing an element by hand in the design canvas, not a deliberate move away
+from the responsive hero that's been tuned across several syncs (including the 1:1 media-box
+fix so the video doesn't letterbox — see the earlier commit). Applying them literally would
+have broken that at every breakpoint. Skipped; flagging here in case a future pull carries
+them again and it turns out to be intentional after all.
 
 ## Still to wire up
 

@@ -18,7 +18,7 @@
   a{color:#0f2f5c;text-decoration:none}
   a:hover{color:#1d4e8f}
   ::selection{background:#0f2f5c;color:#fff}
-  @keyframes ctaWiggle{0%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.15) rotate(45deg)}100%{transform:scale(1.1) rotate(-45deg)}}
+  @keyframes ctaWiggle{0%{transform:rotate(0deg)}20%{transform:rotate(-12deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(6deg)}100%{transform:rotate(0deg)}}
   @keyframes ctaItemIn{0%{opacity:0;transform:translate(0,0) scale(0.4)}100%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}}
   @keyframes ctaItemOut{0%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}100%{opacity:0;transform:translate(0,0) scale(0.4)}}
 </style>
@@ -80,8 +80,8 @@
     <div style="max-width:1240px;margin:0 auto;padding:{{ heroPadding }};width:100%;position:relative;z-index:2;display:grid;grid-template-columns:{{ gridCols2 }};gap:48px;align-items:center">
       <div>
         <div style="display:inline-block;padding:6px 18px;border:1px solid rgba(255,255,255,0.35);border-radius:9999px;color:#cfe0ff;font-size:13px;letter-spacing:1px;margin-bottom:24px">ผู้เชี่ยวชาญด้านงานกระจกครบวงจร</div>
-        <h1 style="font-size:{{ h1Size }};line-height:1.25;color:#fff;font-weight:300;letter-spacing:0.1px;margin:0 0 20px">รับติดตั้งกระจกและอลูมิเนียม<br>ศรีราชา ชลบุรี ครบวงจร</h1>
-        <p style="font-size:17px;line-height:1.7;color:#c9d7ec;max-width:520px;margin:0 0 32px">All About Glass ผู้เชี่ยวชาญงานกระจกและอลูมิเนียมในพื้นที่ศรีราชาและชลบุรี ให้บริการออกแบบ ผลิต และติดตั้งกระจกอาคาร หน้าต่าง-ประตู กระจกเทมเปอร์นิรภัย กระจกลามิเนต บานเฟอร์นิเจอร์ และราวกันตก โดยทีมช่างมืออาชีพ พร้อมให้คำปรึกษาฟรี</p>
+        <h1 style="font-size: {{ h1Size }}; line-height: 1.25; color: #fff; font-weight: 300; letter-spacing: 0.1px; margin: 0 0 20px; width: 619px; height: 188px">รับติดตั้งกระจกและอลูมิเนียม<br>ศรีราชา ชลบุรี ครบวงจร</h1>
+        <p style="font-size: 17px; line-height: 1.7; color: #c9d7ec; max-width: 520px; margin: 0 0 32px; width: 519px; height: 125px">All About Glass ผู้เชี่ยวชาญงานกระจกและอลูมิเนียมในพื้นที่ศรีราชาและชลบุรี ให้บริการออกแบบ ผลิต และติดตั้งกระจกอาคาร หน้าต่าง-ประตู กระจกเทมเปอร์นิรภัย กระจกลามิเนต บานเฟอร์นิเจอร์ และราวกันตก โดยทีมช่างมืออาชีพ พร้อมให้คำปรึกษาฟรี</p>
         <div style="display:flex;gap:16px;flex-wrap:wrap">
           <a href="javascript:void(0)" onClick="{{ goTo.contact }}" style="background:#fff;color:#0f2f5c;padding:14px 32px;border-radius:9999px;font-weight:700;font-size:15px" style-hover="background:#cfe0ff">ติดต่อสอบถาม</a>
           <a href="javascript:void(0)" onClick="{{ goTo.overview }}" style="border:1px solid rgba(255,255,255,0.4);color:#fff;padding:14px 32px;border-radius:9999px;font-weight:700;font-size:15px" style-hover="border-color:#fff">ดูบริการทั้งหมด</a>
@@ -92,7 +92,7 @@
           <image-slot id="hero-main" shape="rect" placeholder="ภาพผลงานอาคาร / กระจกหน้าร้าน"></image-slot>
         </sc-if>
         <sc-if value="{{ isHeroVideo }}" hint-placeholder-val="{{ false }}">
-          <video controls style="width:100%;height:100%;object-fit:contain;background:#0a2545;display:block" src="uploads/intro%20AAG.mp4"></video>
+          <video controls="" style="width: 443px; height: 438px; object-fit: contain; background: #0a2545; display: block" src="uploads/intro%20AAG.mp4"></video>
         </sc-if>
       </div>
     </div>
@@ -276,13 +276,8 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.3-.04-1.3-.13-2.4-.13-2.4 0-4 1.46-4 4.15V9.9H7.6V13h2.7v8h3.2z" fill="#fff"></path></svg>
       </a>
     </sc-if>
-    <button style="position:absolute;right:0;bottom:0;width:60px;height:60px;border-radius:50%;background:#0f2f5c;color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(15,47,92,0.4);cursor:pointer;transition:background 0.25s ease;z-index:2" style-hover="background:#1d4e8f;animation:ctaWiggle 0.6s ease-in-out infinite alternate">
-      <sc-if value="{{ ctaOpenSvg }}" hint-placeholder-val="{{ false }}">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></path></svg>
-      </sc-if>
-      <sc-if value="{{ ctaClosedSvg }}" hint-placeholder-val="{{ true }}">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c0-.8.7-1.5 1.5-1.5h2.3c.7 0 1.3.5 1.5 1.1l1 3.2c.2.6 0 1.3-.5 1.7l-1.4 1.2c1 2.1 2.7 3.8 4.8 4.8l1.2-1.4c.4-.5 1.1-.7 1.7-.5l3.2 1c.6.2 1.1.8 1.1 1.5v2.3c0 .8-.7 1.5-1.5 1.5C10.6 20.4 3.6 13.4 4 5.5z" fill="#fff"></path></svg>
-      </sc-if>
+    <button style="position:absolute;right:0;bottom:0;width:60px;height:60px;border-radius:50%;background:#fff;border:1px solid rgba(15,47,92,0.15);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 20px rgba(15,47,92,0.4);cursor:pointer;z-index:2" style-hover="animation:ctaWiggle 0.4s ease-in-out infinite">
+      <img src="uploads/LINE_ALBUM_2026.7.21_260721_1.jpg" alt="All About Glass" style="width:100%;height:100%;object-fit:cover;object-position:center">
     </button>
   </div>
 
