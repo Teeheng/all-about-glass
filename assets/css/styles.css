@@ -362,6 +362,7 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   align-items: center;
 }
 .hero h1 { color: #fff; font-size: 52px; }
+.hero__nowrap { white-space: nowrap; }
 .hero__media {
   position: relative;
   /* The design's box was 4:5 (portrait), sized for a portrait photo. The
@@ -778,6 +779,16 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   .contact__form { padding: 24px; }
 
   .speed-dial { right: 16px; bottom: 16px; }
+}
+
+/* Below ~430px, "รับติดตั้งกระจกและอลูมิเนียม" no longer fits the viewport
+   at 32px while staying nowrap (measured: 373px content vs ~335px
+   available at 375px width) — .hero__nowrap forces it onto one line
+   unconditionally, so without this it clips silently against the page's
+   overflow-x:hidden instead of wrapping. One more discrete step down,
+   sized with margin for even narrower phones (~320px), fixes it. */
+@media (max-width: 429px) {
+  .hero h1 { font-size: 24px; }
 }
 
 /* Nav switch — deliberately NOT the layout tiers' 860px. Measured in-browser

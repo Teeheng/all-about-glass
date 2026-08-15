@@ -137,8 +137,17 @@ existing responsive `h1Size`/`gridCols2` values, not replacing them. These read 
 artifacts from resizing an element by hand in the design canvas, not a deliberate move away
 from the responsive hero that's been tuned across several syncs (including the 1:1 media-box
 fix so the video doesn't letterbox — see the earlier commit). Applying them literally would
-have broken that at every breakpoint. Skipped; flagging here in case a future pull carries
-them again and it turns out to be intentional after all.
+have broken that at every breakpoint. Confirmed with the user and pushed the correction back
+to the Claude Design project via DesignSync — source and site are in sync on this again.
+
+**Hero h1 first line never wraps.** `รับติดตั้งกระจกและอลูมิเนียม` (before the `<br>`) is
+wrapped in `.hero__nowrap` (`white-space: nowrap`) at the user's request. That alone doesn't
+guarantee it fits — nowrap text ignores its container and just overflows if too wide, which
+`body`'s `overflow-x: hidden` then clips silently instead of showing a scrollbar. Measured
+in-browser: at the existing 32px narrow-tier size the phrase is 373px wide but only ~335px
+is available below 430px viewports, so it was quietly losing its right edge. Added one more
+font-size step (24px below 429px, `styles.css`) sized with margin for a 320px viewport, not
+just the 375px one tested — check both if this phrase or its font-size changes again.
 
 ## Still to wire up
 
