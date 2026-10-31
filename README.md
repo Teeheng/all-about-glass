@@ -11,23 +11,47 @@ Implemented from the Claude Design project
 python -m http.server 4321
 ```
 
-Then open <http://localhost:4321>. No build step, no dependencies.
+Then open <http://localhost:4321>. No dependencies.
 
-Pages use real paths (`/about`, `/articles/choosing-glass`, …). On Vercel, `vercel.json`
-rewrites each of those paths to `index.html`. A plain `python -m http.server` has no
-rewrites, so locally start at `/` and navigate from there (or use `vercel dev`, which reads
-`vercel.json`) — opening a deep link like `localhost:4321/about` directly will 404 there.
+## Editing pages — always rebuild
+
+**Edit `src/index.html`, never the generated files.** Every page is its own HTML file
+(`index.html`, `about/index.html`, `articles/choosing-glass/index.html`, …), generated from
+the one source file by:
+
+```bash
+python scripts/build.py
+```
+
+Run it after any change to `src/index.html` or to `ROUTES` in `assets/js/app.js`, and commit
+the generated files together with the source. Vercel serves them as-is (no build step there).
+
+Why separate files: Facebook, LINE and search engines read a page's `<title>`, description
+and share preview straight from the HTML without running JavaScript. With one shared
+`index.html`, every shared link previewed as the home page. Each generated file has its
+own title/description/canonical/`og:*`, exactly one `<h1>`, and only its own section.
+
+`build.py` also:
+- reads page titles and descriptions from `ROUTES` in `app.js` (the single place they live);
+- rewrites the `rewrites` list in `vercel.json` and regenerates `sitemap.xml`;
+- adds FAQPage structured data to `/faq` from its `<details class="faq-item">` blocks, so
+  the structured data always matches the visible answers.
+
+To add a page: add a `<!-- ══ NAME ══ -->` comment + `<section class="page …" data-page="…">`
+inside `<main>` in `src/index.html`, add the route to `ROUTES` in `app.js`, then rebuild.
 
 ## Layout
 
 ```
-index.html                      the site (all eight pages)
+src/index.html                  SOURCE — all pages in one file (edit this)
+index.html, */index.html        GENERATED — one file per page (don't edit)
+scripts/build.py                generator (see above)
 assets/css/styles.css           design tokens + layout + responsive rules
-assets/js/app.js                path router + per-page meta, mobile nav, enquiry form
+assets/js/app.js                ROUTES (titles/descriptions), mobile nav, enquiry form, analytics
 uploads/aag-logo.png            AAG logo (header + speed-dial)
 uploads/LINE_ALBUM_…_1.jpg      old logo copy — only the .dc.html design source still uses it
 uploads/og-image.jpg            1200×630 link-share image; favicon.png, apple-touch-icon.png
-vercel.json                     clean-URL rewrites (one per page) + upload caching
+vercel.json                     clean URL → generated file + upload caching
 robots.txt, sitemap.xml         for search engines
 
 All About Glass.dc.html         imported design source — reference only
@@ -37,32 +61,28 @@ image-slot.js                   Claude Design's drag-drop image-placeholder comp
 ```
 
 `All About Glass.dc.html`, `support.js`, and `image-slot.js` are the untouched import from
-Claude Design. The shipping site is `index.html`; editing the `.dc.html` does not change it.
+Claude Design. The shipping site is built from `src/index.html`; editing the `.dc.html` does
+not change it.
 
-**`image-slot.js` is never loaded by `index.html`.** The design now places images via a
+**`image-slot.js` is never loaded by the site.** The design places images via a
 custom `<image-slot>` element — a drag-and-drop placeholder tied to Claude Design's
-`window.omelette` runtime bridge (persists drops to a `.image-slots.state.json` sidecar
-file next to the `.dc.html`). Its own docs say outright: "Outside the omelette runtime the
-slot is read-only." None of that exists on a plain static site, so wherever the design uses
-`<image-slot>`, this build keeps using the pre-existing `.frame` placeholder `<div>` pattern
-instead — same visual treatment, no dependency on tooling that only exists inside the
-design canvas.
+`window.omelette` runtime bridge. Outside that runtime the slot is read-only, so wherever
+the design uses `<image-slot>`, this build keeps using the `.frame` placeholder `<div>`
+pattern instead.
 
 ## Re-importing after a design change
 
 When the Claude Design project is edited, ask Claude Code to pull it again — it re-reads
 project `ffbe7aa9-f5a7-4f78-b3e1-62586fe4f542`, overwrites the two import files, and ports
-the diff into `index.html` / `assets/`. Nothing under `assets/` is generated, so the port
+the diff into `src/index.html` / `assets/`, then runs `scripts/build.py`. Nothing under `assets/` is generated, so the port
 is a deliberate edit each time, not a regeneration.
 
 ## How it works
 
-Eleven pages live as `<section data-page="…">` in `index.html`. Each has its own real URL;
-`app.js` shows one at a time based on `location.pathname` (History API), so pages are
-linkable, bookmarkable, indexable by Google one by one, and the back button works. Internal
-links are plain `<a href="/about">` — `app.js` intercepts clicks to swap pages without a
-reload, and on every page change it also updates `<title>`, meta description, canonical,
-and `og:url`/`og:title`/`og:description`.
+Twelve pages live as `<section data-page="…">` in `src/index.html`; `build.py` writes each
+one to its own file at its real URL. Internal links are plain `<a href="/about">` and load
+the page normally. (`app.js` can still swap sections without a reload when several are in one
+file — e.g. if `src/index.html` is opened directly — but the live site doesn't use that.)
 
 | page | path |
 | --- | --- |
@@ -76,6 +96,7 @@ and `og:url`/`og:title`/`og:description`.
 | — วิธีเลือกกระจกให้เหมาะกับบ้าน | `/articles/choosing-glass` |
 | — เทมเปอร์ vs ลามิเนต | `/articles/tempered-vs-laminated` |
 | — ไอเดียตกแต่งบ้านด้วยกระจก | `/articles/glass-decor-ideas` |
+| คำถามที่พบบ่อย + ขั้นตอนการทำงาน | `/faq` |
 | นโยบายความเป็นส่วนตัว | `/privacy` |
 | ติดต่อเรา | `/contact` |
 

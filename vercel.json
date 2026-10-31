@@ -3,47 +3,51 @@
   "rewrites": [
     {
       "source": "/about",
-      "destination": "/index.html"
+      "destination": "/about/index.html"
     },
     {
       "source": "/overview",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/products",
-      "destination": "/index.html"
+      "destination": "/overview/index.html"
     },
     {
       "source": "/services",
-      "destination": "/index.html"
+      "destination": "/services/index.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/products/index.html"
     },
     {
       "source": "/gallery",
-      "destination": "/index.html"
+      "destination": "/gallery/index.html"
     },
     {
       "source": "/articles",
-      "destination": "/index.html"
+      "destination": "/articles/index.html"
     },
     {
       "source": "/articles/choosing-glass",
-      "destination": "/index.html"
+      "destination": "/articles/choosing-glass/index.html"
     },
     {
       "source": "/articles/tempered-vs-laminated",
-      "destination": "/index.html"
+      "destination": "/articles/tempered-vs-laminated/index.html"
     },
     {
       "source": "/articles/glass-decor-ideas",
-      "destination": "/index.html"
+      "destination": "/articles/glass-decor-ideas/index.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq/index.html"
     },
     {
       "source": "/privacy",
-      "destination": "/index.html"
+      "destination": "/privacy/index.html"
     },
     {
       "source": "/contact",
-      "destination": "/index.html"
+      "destination": "/contact/index.html"
     }
   ],
   "headers": [
