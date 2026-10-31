@@ -102,6 +102,13 @@ Custom events from `app.js`: `click_call`, `click_line`, `click_facebook` (with
 `link_location`: page name or `speed_dial`) and `generate_lead` on a successful form send.
 Mark `click_call`, `click_line` and `generate_lead` as **Key events** in GA4 admin.
 
+**Meta Pixel** (dataset "AAG Website", `1096669096523880`, linked to AAG's ad account
+`1676731489917505` — never TPG's) loads in `<head>` under the same consent rule: `fbq('consent',
+'revoke')` until ยอมรับ, and `app.js` (`fbReady()`) sends nothing to Meta before that. Because
+pages change without reloading, `app.js` fires `PageView` on each page change and once on
+accept. Standard events: `Contact` (`method: phone|line`) for call/LINE taps and `Lead` for a
+sent form — use these as optimisation goals when boosting posts.
+
 **Brand assets:** `uploads/aag-logo.png` is the official logo file (same square framing as
 the old LINE-album JPG, so the header's whitespace crop is unchanged).
 `uploads/favicon.png` / `apple-touch-icon.png` are the "AAG" letter mark only;
