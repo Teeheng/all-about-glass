@@ -648,6 +648,36 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   color: var(--foot);
   font-size: 13px;
 }
+.site-footer__link { display: inline-block; margin-left: 8px; color: var(--foot); text-decoration: underline; }
+.site-footer__link:hover { color: #fff; }
+
+/* ── Cookie consent bar (PDPA) ──────────────────
+   Sits above the speed-dial (z-index 100) and leaves room for it on the right. */
+.consent {
+  position: fixed;
+  left: 24px;
+  right: 108px;
+  bottom: 24px;
+  z-index: 110;
+  max-width: 760px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(0, 40, 91, 0.18);
+}
+.consent[hidden] { display: none; }
+.consent__text { margin: 0; font-size: 14px; color: var(--body); }
+.consent__actions { display: flex; gap: 10px; flex-shrink: 0; }
+.btn--ghost-navy { border: 1px solid var(--navy); color: var(--navy); background: transparent; padding: 10px 22px; font-size: 14px; }
+.btn--ghost-navy:hover { background: var(--panel); color: var(--navy); }
+@media (max-width: 699px) {
+  .consent { left: 12px; right: 12px; bottom: 88px; flex-direction: column; align-items: stretch; gap: 12px; }
+  .consent__actions .btn { flex: 1; }
+}
 
 /* ── Floating speed-dial CTA ────────────────────
    Opens on hover (desktop) or click/tap (touch, keyboard) via .is-open on

@@ -76,6 +76,7 @@ and `og:url`/`og:title`/`og:description`.
 | — วิธีเลือกกระจกให้เหมาะกับบ้าน | `/articles/choosing-glass` |
 | — เทมเปอร์ vs ลามิเนต | `/articles/tempered-vs-laminated` |
 | — ไอเดียตกแต่งบ้านด้วยกระจก | `/articles/glass-decor-ideas` |
+| นโยบายความเป็นส่วนตัว | `/privacy` |
 | ติดต่อเรา | `/contact` |
 
 **Adding a page means editing three places:** the `ROUTES` map in `app.js`, the
@@ -90,6 +91,16 @@ catch-all rewrite), so Google doesn't index soft-404 duplicates of the home page
 **SEO files:** `robots.txt`, `sitemap.xml`, and a schema.org `HomeAndConstructionBusiness`
 JSON-LD block in `<head>` (name, phone, email, address, area served, social links — no
 opening hours or ratings, since none are published).
+
+**Analytics + PDPA consent.** GA4 (`G-HVJC0WM71K`) loads in `<head>` with Consent Mode
+v2: everything defaults to `denied` (cookieless pings only) until the visitor clicks
+ยอมรับ on the cookie bar (`#consent`). The choice is stored in `localStorage`
+(`aag-consent`) and re-applied on each visit; `/privacy` has a button that clears it and
+re-opens the bar. GA4 enhanced measurement counts page changes from `history.pushState` —
+`app.js` updates the title *before* pushing, so each page_view carries the right title.
+Custom events from `app.js`: `click_call`, `click_line`, `click_facebook` (with
+`link_location`: page name or `speed_dial`) and `generate_lead` on a successful form send.
+Mark `click_call`, `click_line` and `generate_lead` as **Key events** in GA4 admin.
 
 **Brand assets:** `uploads/aag-logo.png` is the official logo file (same square framing as
 the old LINE-album JPG, so the header's whitespace crop is unchanged).
