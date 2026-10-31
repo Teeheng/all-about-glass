@@ -9,7 +9,7 @@
   --body:        #3a4a63;
   --muted:       #5a6f8f;
 
-  --navy:        #0f2f5c;
+  --navy:        #00285b;   /* AAG brand navy (Brand Guideline) */
   --navy-deep:   #0a2545;
   --blue:        #1d4e8f;
   --blue-pale:   #cfe0ff;
@@ -18,8 +18,8 @@
   --foot:        #7f9bd0;
 
   --panel:       #f0f3f9;
-  --line:        rgba(15, 47, 92, 0.10);
-  --line-soft:   rgba(15, 47, 92, 0.08);
+  --line:        rgba(0, 40, 91, 0.10);
+  --line-soft:   rgba(0, 40, 91, 0.08);
 
   --shell:       1240px;
   --gutter:      32px;
@@ -170,9 +170,9 @@ img { max-width: 100%; display: block; }
 
 .submenu__panel {
   background: #fff;
-  border: 1px solid rgba(15, 47, 92, 0.12);
+  border: 1px solid rgba(0, 40, 91, 0.12);
   border-radius: var(--radius);
-  box-shadow: 0 12px 32px rgba(15, 47, 92, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 40, 91, 0.15);
   min-width: 180px;
   overflow: hidden;
 }
@@ -448,6 +448,21 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   gap: 28px;
 }
 .card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Price tiers under the product list — reuses .card, adds a text label
+   in place of the round number badge. */
+.tiers { margin-top: 64px; }
+.tiers__title { font-size: 24px; font-weight: 300; letter-spacing: 0.1px; margin: 0 0 8px; color: var(--ink); }
+.tiers__sub { margin: 0 0 28px; color: var(--muted); }
+.card__label {
+  align-self: flex-start;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--blue-pale);
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 600;
+}
 .card {
   background: #f5f7fa;
   border-radius: var(--radius-lg);
@@ -459,7 +474,7 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
 }
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px -18px rgba(15, 47, 92, 0.55);
+  box-shadow: 0 12px 28px -18px rgba(0, 40, 91, 0.55);
 }
 .card__num {
   width: 44px;
@@ -515,7 +530,7 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
 }
 .article-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px -18px rgba(15, 47, 92, 0.55);
+  box-shadow: 0 12px 28px -18px rgba(0, 40, 91, 0.55);
 }
 .article-card__body { padding: 24px; }
 .article-card__body h3 { font-size: 18px; margin: 0 0 10px; color: var(--ink); }
@@ -676,7 +691,7 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   pointer-events: auto;
   transform: translate(var(--tx), var(--ty)) scale(1);
 }
-.speed-dial__satellite--phone { background: var(--navy); --tx: -8px;  --ty: -92px; transition-delay: .02s; box-shadow: 0 6px 16px rgba(15,47,92,0.35); }
+.speed-dial__satellite--phone { background: var(--navy); --tx: -8px;  --ty: -92px; transition-delay: .02s; box-shadow: 0 6px 16px rgba(0, 40, 91, 0.35); }
 .speed-dial__satellite--phone:hover { background: var(--blue); }
 .speed-dial__satellite--line  { background: #06c755; --tx: -76px; --ty: -64px; transition-delay: .08s; box-shadow: 0 6px 16px rgba(6,199,85,0.35); font-weight: 700; font-size: 14px; }
 .speed-dial__satellite--line:hover { background: #05b34c; }
@@ -691,12 +706,12 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
   height: 60px;
   border-radius: 50%;
   background: #fff;
-  border: 1px solid rgba(15,47,92,0.15);
+  border: 1px solid rgba(0, 40, 91, 0.15);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(15,47,92,0.4);
+  box-shadow: 0 8px 20px rgba(0, 40, 91, 0.4);
   cursor: pointer;
   z-index: 2;
 }
