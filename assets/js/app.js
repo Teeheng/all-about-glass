@@ -10,9 +10,10 @@
   var SITE_URL  = 'https://all-about-glass.vercel.app';
   var DEFAULT_DESC = 'All About Glass จำหน่ายและติดตั้งกระจกและอลูมิเนียมครบวงจร กรุงเทพฯ ปริมณฑล และภาคตะวันออก กระจกใส กระจกเงา กระจกเทมเปอร์ กระจกลามิเนต ราวกันตก บานเฟอร์นิเจอร์ ให้คำปรึกษาฟรี';
 
-  // Each page has its own real URL (served by the rewrites in vercel.json),
-  // so Google can index every page — and every article — separately.
-  // Keep paths in sync with vercel.json and sitemap.xml.
+  // Each page is its own HTML file, generated from src/index.html by
+  // scripts/build.py with that page's <title>, description and share preview
+  // baked in. The titles/descriptions below are the single source of truth:
+  // build.py reads them from here. Keep paths in sync with sitemap.xml.
   var ROUTES = {
     home:     { path: '/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม กรุงเทพฯ ปริมณฑล และภาคตะวันออก', desc: DEFAULT_DESC },
     about:    { path: '/about',    title: 'เกี่ยวกับเรา — ' + SITE_NAME, desc: 'รู้จักบริษัท ออล อะเบ้าท์ กลาส จำกัด ผู้เชี่ยวชาญงานกระจก ขายและติดตั้งในเจ้าเดียว ราคาชัดเจน ไม่บวกเกินจริง' },
@@ -24,6 +25,7 @@
     'article-choosing-glass':     { path: '/articles/choosing-glass',        title: 'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ — ' + SITE_NAME, desc: 'แนะนำการเลือกกระจกใส เทมเปอร์ ฝ้า และลามิเนต ให้เหมาะกับแต่ละพื้นที่ในบ้าน' },
     'article-tempered-laminated': { path: '/articles/tempered-vs-laminated', title: 'กระจกเทมเปอร์ vs กระจกลามิเนต — ' + SITE_NAME, desc: 'เปรียบเทียบกระจกเทมเปอร์และกระจกลามิเนต ต่างกันอย่างไร ควรใช้จุดไหนในบ้าน' },
     'article-decor-ideas':        { path: '/articles/glass-decor-ideas',     title: 'ไอเดียตกแต่งบ้านด้วยงานกระจก — ' + SITE_NAME, desc: 'รวมไอเดียผนังกระจก ราวกันตกกระจก กระจกเงา และเฟอร์นิเจอร์กระจก เพิ่มความโปร่งโล่งให้บ้าน' },
+    faq:      { path: '/faq',      title: 'คำถามที่พบบ่อย และขั้นตอนการทำงาน — ' + SITE_NAME, desc: 'ตอบคำถามก่อนทำงานกระจก: คิดราคาอย่างไร มีกี่ระดับราคา เลือกกระจกชนิดไหนดี พื้นที่บริการ และขั้นตอนตั้งแต่ปรึกษาจนติดตั้งเสร็จ' },
     privacy:  { path: '/privacy',  title: 'นโยบายความเป็นส่วนตัว — ' + SITE_NAME, desc: 'นโยบายความเป็นส่วนตัวและการใช้คุกกี้ของเว็บไซต์ All About Glass' },
     contact:  { path: '/contact',  title: 'ติดต่อเรา — ' + SITE_NAME, desc: 'ติดต่อ All About Glass โทร 062-964-6492 LINE: allaboutglass ขอใบเสนอราคาฟรี' }
   };
@@ -66,7 +68,15 @@
     if (el) el.setAttribute(attr, value);
   }
 
+  function hasPage(route) {
+    return pages.some(function (page) { return page.dataset.page === route; });
+  }
+
   function render(route, opts) {
+    // A generated page file holds only its own section; fall back to whatever
+    // section this file has (e.g. the home file served for an unknown path).
+    if (!hasPage(route) && pages.length) route = pages[0].dataset.page;
+
     pages.forEach(function (page) {
       page.hidden = page.dataset.page !== route;
     });
@@ -84,14 +94,19 @@
       link.classList.toggle('is-active', covers.indexOf(route) !== -1);
     });
 
+    // Each generated file already carries its own title/meta; only update
+    // them when switching sections inside one file (the all-pages source
+    // opened directly, or no-build local preview).
     var r = ROUTES[route];
-    var url = SITE_URL + r.path;
-    document.title = r.title;
-    setMeta('meta[name="description"]', 'content', r.desc);
-    setMeta('link[rel="canonical"]', 'href', url);
-    setMeta('meta[property="og:url"]', 'content', url);
-    setMeta('meta[property="og:title"]', 'content', r.title);
-    setMeta('meta[property="og:description"]', 'content', r.desc);
+    if (pages.length > 1 && r) {
+      var url = SITE_URL + r.path;
+      document.title = r.title;
+      setMeta('meta[name="description"]', 'content', r.desc);
+      setMeta('link[rel="canonical"]', 'href', url);
+      setMeta('meta[property="og:url"]', 'content', url);
+      setMeta('meta[property="og:title"]', 'content', r.title);
+      setMeta('meta[property="og:description"]', 'content', r.desc);
+    }
 
     if (!opts || opts.scroll !== false) {
       window.scrollTo(0, 0);
@@ -126,14 +141,16 @@
     if (fbReady()) window.fbq('track', 'PageView');
   }
 
-  // Internal links are plain <a href="/about"> — they work without JS (the
-  // server returns this same page). With JS, swap pages without a reload.
+  // Internal links are plain <a href="/about">. On the live site each page is
+  // its own file, so links to other pages load normally (that is what makes
+  // every page's share preview and title correct). Only when the target
+  // section is in this same file do we swap without a reload.
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest('a[href]');
     if (!a || a.target === '_blank' || a.origin !== location.origin) return;
     var path = normalisePath(a.pathname);
-    if (!ROUTE_BY_PATH[path] || a.hash) return;
+    if (!ROUTE_BY_PATH[path] || a.hash || !hasPage(ROUTE_BY_PATH[path])) return;
     e.preventDefault();
     go(path);
   });
@@ -435,9 +452,15 @@
   if (location.hash.indexOf('#/') === 0) {
     var legacy = location.hash.slice(2).replace(/\/+$/, '');
     var name = Object.prototype.hasOwnProperty.call(ROUTES, legacy) ? legacy : DEFAULT_ROUTE;
-    history.replaceState(null, '', ROUTES[name].path);
+    if (hasPage(name)) history.replaceState(null, '', ROUTES[name].path);
+    else location.replace(ROUTES[name].path);
   }
 
-  window.addEventListener('popstate', function () { onRouteChange(); fbPageView(); });
+  window.addEventListener('popstate', function () {
+    var route = routeFromLocation();
+    if (!hasPage(route)) { location.reload(); return; }
+    onRouteChange(route);
+    fbPageView();
+  });
   render(routeFromLocation(), { scroll: false });
 })();
