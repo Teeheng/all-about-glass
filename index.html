@@ -26,6 +26,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/styles.css">
 
+<!-- Google Analytics 4 with Consent Mode v2 (PDPA). Nothing is stored in
+     cookies until the visitor accepts the banner; before that GA only gets
+     cookieless pings. The visitor's choice is kept in localStorage
+     ("aag-consent": "granted" | "denied") and applied here on every visit. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  (function () {
+    var choice = null;
+    try { choice = localStorage.getItem('aag-consent'); } catch (e) {}
+    var v = choice === 'granted' ? 'granted' : 'denied';
+    gtag('consent', 'default', { analytics_storage: v, ad_storage: v, ad_user_data: v, ad_personalization: v, wait_for_update: 500 });
+  })();
+  gtag('js', new Date());
+  gtag('config', 'G-HVJC0WM71K');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HVJC0WM71K"></script>
+
 <!-- Structured data: lets Google show the business (name, phone, area served)
      in search and Maps results. Only facts from the company profile — no
      opening hours or ratings, since none are published yet. -->
@@ -430,6 +448,29 @@
     </div>
   </section>
 
+  <!-- ══ PRIVACY ══ -->
+  <section class="page section article-detail" data-page="privacy" aria-labelledby="privacy-title">
+    <div class="shell article-detail__content">
+      <p class="eyebrow">นโยบายความเป็นส่วนตัว</p>
+      <h2 id="privacy-title">นโยบายความเป็นส่วนตัวและการใช้คุกกี้</h2>
+      <p class="prose">บริษัท ออล อะเบ้าท์ กลาส จำกัด ("บริษัท") ให้ความสำคัญกับข้อมูลส่วนบุคคลของผู้ใช้งานเว็บไซต์ all-about-glass.vercel.app ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</p>
+
+      <h3>ข้อมูลที่เราเก็บ</h3>
+      <p class="prose"><strong>ข้อมูลที่คุณกรอกในแบบฟอร์มติดต่อ</strong> ได้แก่ ชื่อ-นามสกุล เบอร์โทรศัพท์ ไอดีไลน์ และรายละเอียดงาน ข้อมูลนี้ส่งผ่านบริการ Formspree ไปยังอีเมลของบริษัท</p>
+      <p class="prose"><strong>ข้อมูลการใช้งานเว็บไซต์</strong> ผ่านคุกกี้ของ Google Analytics เช่น หน้าที่เข้าชม อุปกรณ์ และช่องทางที่เข้ามา ใช้เมื่อคุณกดยอมรับคุกกี้เท่านั้น</p>
+
+      <h3>วัตถุประสงค์</h3>
+      <p class="prose">เพื่อติดต่อกลับ ให้คำปรึกษา และจัดทำใบเสนอราคาตามที่คุณร้องขอ และเพื่อวัดผลและปรับปรุงเว็บไซต์ บริษัทไม่ขายหรือเปิดเผยข้อมูลของคุณให้บุคคลภายนอกเพื่อวัตถุประสงค์อื่น</p>
+
+      <h3>คุกกี้</h3>
+      <p class="prose">เว็บไซต์ใช้คุกกี้เพื่อการวิเคราะห์และการตลาดเมื่อคุณกดยอมรับเท่านั้น หากปฏิเสธ เว็บไซต์ยังใช้งานได้ตามปกติ คุณเปลี่ยนการตั้งค่าได้ทุกเมื่อ</p>
+      <p><button class="btn btn--primary" type="button" data-consent-reset>เปลี่ยนการตั้งค่าคุกกี้</button></p>
+
+      <h3>สิทธิของคุณ</h3>
+      <p class="prose">คุณมีสิทธิขอเข้าถึง แก้ไข หรือลบข้อมูลส่วนบุคคลของคุณ หรือถอนความยินยอมได้ โดยติดต่อบริษัทที่อีเมล <a href="mailto:aag_th@outlook.com">aag_th@outlook.com</a> หรือโทร <a href="tel:+66629646492">062-964-6492</a></p>
+    </div>
+  </section>
+
   <!-- ══ CONTACT ══ -->
   <section class="page section contact" data-page="contact" aria-labelledby="contact-title">
     <div class="shell contact__grid">
@@ -494,7 +535,17 @@
 
 <footer class="site-footer">
   © 2026 All About Glass Co., Ltd. — บริษัท ออล อะเบ้าท์ กลาส จำกัด — ผู้เชี่ยวชาญงานกระจก — All rights reserved.
+  <a class="site-footer__link" href="/privacy">นโยบายความเป็นส่วนตัว</a>
 </footer>
+
+<!-- ══ COOKIE CONSENT (PDPA) — shown by app.js until the visitor chooses ══ -->
+<div class="consent" id="consent" role="dialog" aria-live="polite" aria-label="การใช้คุกกี้" hidden>
+  <p class="consent__text">เว็บไซต์นี้ใช้คุกกี้เพื่อวิเคราะห์การใช้งานและปรับปรุงบริการ อ่านเพิ่มเติมใน <a href="/privacy">นโยบายความเป็นส่วนตัว</a></p>
+  <div class="consent__actions">
+    <button class="btn btn--ghost-navy" type="button" data-consent="denied">ปฏิเสธ</button>
+    <button class="btn btn--primary" type="button" data-consent="granted">ยอมรับ</button>
+  </div>
+</div>
 
 <!-- ══ FLOATING SPEED-DIAL CTA ══ -->
 <div class="speed-dial" id="speed-dial">

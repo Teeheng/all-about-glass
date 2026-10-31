@@ -24,6 +24,7 @@
     'article-choosing-glass':     { path: '/articles/choosing-glass',        title: 'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ — ' + SITE_NAME, desc: 'แนะนำการเลือกกระจกใส เทมเปอร์ ฝ้า และลามิเนต ให้เหมาะกับแต่ละพื้นที่ในบ้าน' },
     'article-tempered-laminated': { path: '/articles/tempered-vs-laminated', title: 'กระจกเทมเปอร์ vs กระจกลามิเนต — ' + SITE_NAME, desc: 'เปรียบเทียบกระจกเทมเปอร์และกระจกลามิเนต ต่างกันอย่างไร ควรใช้จุดไหนในบ้าน' },
     'article-decor-ideas':        { path: '/articles/glass-decor-ideas',     title: 'ไอเดียตกแต่งบ้านด้วยงานกระจก — ' + SITE_NAME, desc: 'รวมไอเดียผนังกระจก ราวกันตกกระจก กระจกเงา และเฟอร์นิเจอร์กระจก เพิ่มความโปร่งโล่งให้บ้าน' },
+    privacy:  { path: '/privacy',  title: 'นโยบายความเป็นส่วนตัว — ' + SITE_NAME, desc: 'นโยบายความเป็นส่วนตัวและการใช้คุกกี้ของเว็บไซต์ All About Glass' },
     contact:  { path: '/contact',  title: 'ติดต่อเรา — ' + SITE_NAME, desc: 'ติดต่อ All About Glass โทร 062-964-6492 LINE: allaboutglass ขอใบเสนอราคาฟรี' }
   };
 
@@ -97,16 +98,19 @@
     }
   }
 
-  function onRouteChange() {
+  function onRouteChange(route) {
     closeNav();
     closeSubmenus();
     setDialOpen(false);
-    render(routeFromLocation());
+    render(typeof route === 'string' ? route : routeFromLocation());
   }
 
   function go(path) {
-    if (normalisePath(location.pathname) !== path) history.pushState(null, '', path);
-    onRouteChange();
+    var changed = normalisePath(location.pathname) !== path;
+    // Update title/meta first: GA4 (enhanced measurement) logs a page_view
+    // the moment pushState runs, reading document.title at that instant.
+    onRouteChange(ROUTE_BY_PATH[path]);
+    if (changed) history.pushState(null, '', path);
   }
 
   // Internal links are plain <a href="/about"> — they work without JS (the
@@ -330,6 +334,7 @@
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           form.reset();
+          track('generate_lead', { method: 'contact_form' });
           say('ส่งข้อความเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุด');
         })
         .catch(function () {
@@ -340,6 +345,60 @@
         });
     });
   }
+
+  /* ── Analytics events ───────────────────────── */
+  // GA4 is loaded in <head>. Clicks on phone / LINE / Facebook links anywhere
+  // (contact page, speed-dial) become events — mark click_call, click_line and
+  // generate_lead as Key events in GA4 to count them as leads.
+
+  function track(name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    var page = a.closest('[data-page]');
+    var where = a.closest('#speed-dial') ? 'speed_dial' : (page ? page.dataset.page : 'other');
+    if (href.indexOf('tel:') === 0)               track('click_call',     { link_location: where });
+    else if (href.indexOf('line.me') !== -1)      track('click_line',     { link_location: where });
+    else if (href.indexOf('facebook.com') !== -1) track('click_facebook', { link_location: where });
+  });
+
+  /* ── Cookie consent (PDPA) ──────────────────── */
+  // The banner shows until the visitor chooses; the choice is applied to GA4
+  // Consent Mode and remembered. /privacy has a button to choose again.
+
+  var consentBar = document.getElementById('consent');
+
+  function readConsent() {
+    try { return localStorage.getItem('aag-consent'); } catch (e) { return null; }
+  }
+
+  function setConsent(value) {
+    try { localStorage.setItem('aag-consent', value); } catch (e) {}
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', { analytics_storage: value, ad_storage: value, ad_user_data: value, ad_personalization: value });
+    }
+    if (consentBar) consentBar.hidden = true;
+  }
+
+  if (consentBar) {
+    if (!readConsent()) consentBar.hidden = false;
+    consentBar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-consent]');
+      if (b) setConsent(b.dataset.consent);
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-consent-reset]') || !consentBar) return;
+    try { localStorage.removeItem('aag-consent'); } catch (err) {}
+    consentBar.hidden = false;
+    var accept = consentBar.querySelector('[data-consent="granted"]');
+    if (accept) accept.focus();
+  });
 
   /* ── Boot ───────────────────────────────────── */
 
