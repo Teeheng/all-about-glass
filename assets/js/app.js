@@ -110,7 +110,20 @@
     // Update title/meta first: GA4 (enhanced measurement) logs a page_view
     // the moment pushState runs, reading document.title at that instant.
     onRouteChange(ROUTE_BY_PATH[path]);
-    if (changed) history.pushState(null, '', path);
+    if (changed) {
+      history.pushState(null, '', path);
+      fbPageView();
+    }
+  }
+
+  // GA4 counts pushState page changes by itself; Meta Pixel does not.
+  // Pixel calls go out only after ยอมรับ — not even queued before that.
+  function fbReady() {
+    return typeof window.fbq === 'function' && readConsent() === 'granted';
+  }
+
+  function fbPageView() {
+    if (fbReady()) window.fbq('track', 'PageView');
   }
 
   // Internal links are plain <a href="/about"> — they work without JS (the
@@ -351,8 +364,18 @@
   // (contact page, speed-dial) become events — mark click_call, click_line and
   // generate_lead as Key events in GA4 to count them as leads.
 
+  // Meta standard events for the same actions: calls and LINE taps are
+  // "Contact", a sent enquiry form is "Lead" — usable as ad optimisation goals.
+  var FB_EVENTS = {
+    click_call:    ['Contact', { method: 'phone' }],
+    click_line:    ['Contact', { method: 'line' }],
+    generate_lead: ['Lead',    { method: 'contact_form' }]
+  };
+
   function track(name, params) {
     if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+    var fb = FB_EVENTS[name];
+    if (fb && fbReady()) window.fbq('track', fb[0], fb[1]);
   }
 
   document.addEventListener('click', function (e) {
@@ -380,6 +403,11 @@
     try { localStorage.setItem('aag-consent', value); } catch (e) {}
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', { analytics_storage: value, ad_storage: value, ad_user_data: value, ad_personalization: value });
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('consent', value === 'granted' ? 'grant' : 'revoke');
+      // The load-time PageView was held back by the revoke — count this page now.
+      if (value === 'granted') fbPageView();
     }
     if (consentBar) consentBar.hidden = true;
   }
@@ -410,6 +438,6 @@
     history.replaceState(null, '', ROUTES[name].path);
   }
 
-  window.addEventListener('popstate', onRouteChange);
+  window.addEventListener('popstate', function () { onRouteChange(); fbPageView(); });
   render(routeFromLocation(), { scroll: false });
 })();

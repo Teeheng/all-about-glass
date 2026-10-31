@@ -44,6 +44,27 @@
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HVJC0WM71K"></script>
 
+<!-- Meta Pixel (dataset "AAG Website", ad account 1676731489917505 — AAG's, not TPG's).
+     Same consent rule as GA4: consent is revoked unless the visitor accepted, so
+     no events or cookies are sent before ยอมรับ. app.js grants consent on accept
+     and fires PageView on every page change (the site never reloads). -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  (function () {
+    var choice = null;
+    try { choice = localStorage.getItem('aag-consent'); } catch (e) {}
+    var ok = choice === 'granted';
+    fbq('consent', ok ? 'grant' : 'revoke');
+    fbq('init', '1096669096523880');
+    // First-time visitors: app.js fires this PageView when they click ยอมรับ.
+    if (ok) fbq('track', 'PageView');
+  })();
+</script>
+
 <!-- Structured data: lets Google show the business (name, phone, area served)
      in search and Maps results. Only facts from the company profile — no
      opening hours or ratings, since none are published yet. -->
@@ -457,10 +478,10 @@
 
       <h3>ข้อมูลที่เราเก็บ</h3>
       <p class="prose"><strong>ข้อมูลที่คุณกรอกในแบบฟอร์มติดต่อ</strong> ได้แก่ ชื่อ-นามสกุล เบอร์โทรศัพท์ ไอดีไลน์ และรายละเอียดงาน ข้อมูลนี้ส่งผ่านบริการ Formspree ไปยังอีเมลของบริษัท</p>
-      <p class="prose"><strong>ข้อมูลการใช้งานเว็บไซต์</strong> ผ่านคุกกี้ของ Google Analytics เช่น หน้าที่เข้าชม อุปกรณ์ และช่องทางที่เข้ามา ใช้เมื่อคุณกดยอมรับคุกกี้เท่านั้น</p>
+      <p class="prose"><strong>ข้อมูลการใช้งานเว็บไซต์</strong> ผ่านคุกกี้ของ Google Analytics และ Meta Pixel (Facebook) เช่น หน้าที่เข้าชม อุปกรณ์ ช่องทางที่เข้ามา และการกดติดต่อ ใช้เมื่อคุณกดยอมรับคุกกี้เท่านั้น</p>
 
       <h3>วัตถุประสงค์</h3>
-      <p class="prose">เพื่อติดต่อกลับ ให้คำปรึกษา และจัดทำใบเสนอราคาตามที่คุณร้องขอ และเพื่อวัดผลและปรับปรุงเว็บไซต์ บริษัทไม่ขายหรือเปิดเผยข้อมูลของคุณให้บุคคลภายนอกเพื่อวัตถุประสงค์อื่น</p>
+      <p class="prose">เพื่อติดต่อกลับ ให้คำปรึกษา และจัดทำใบเสนอราคาตามที่คุณร้องขอ เพื่อวัดผลและปรับปรุงเว็บไซต์ และเพื่อแสดงโฆษณาบน Facebook/Instagram ให้ตรงกับผู้ที่สนใจ บริษัทไม่ขายหรือเปิดเผยข้อมูลของคุณให้บุคคลภายนอกเพื่อวัตถุประสงค์อื่น</p>
 
       <h3>คุกกี้</h3>
       <p class="prose">เว็บไซต์ใช้คุกกี้เพื่อการวิเคราะห์และการตลาดเมื่อคุณกดยอมรับเท่านั้น หากปฏิเสธ เว็บไซต์ยังใช้งานได้ตามปกติ คุณเปลี่ยนการตั้งค่าได้ทุกเมื่อ</p>
