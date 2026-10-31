@@ -1,0 +1,56 @@
+{
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/overview",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/articles",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/articles/choosing-glass",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/articles/tempered-vs-laminated",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/articles/glass-decor-ideas",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/uploads/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    }
+  ]
+}

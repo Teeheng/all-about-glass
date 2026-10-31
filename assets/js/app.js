@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════
-   All About Glass — routing, mobile nav, enquiry form
+   All About Glass — path routing, mobile nav, enquiry form
    No dependencies. Progressive enhancement: without JS
    every section renders stacked on one page.
    ══════════════════════════════════════════════════ */
@@ -7,20 +7,28 @@
   'use strict';
 
   var SITE_NAME = 'All About Glass';
+  var SITE_URL  = 'https://all-about-glass.vercel.app';
+  var DEFAULT_DESC = 'All About Glass จำหน่ายและติดตั้งกระจกและอลูมิเนียมครบวงจร กรุงเทพฯ ปริมณฑล และภาคตะวันออก กระจกใส กระจกเงา กระจกเทมเปอร์ กระจกลามิเนต ราวกันตก บานเฟอร์นิเจอร์ ให้คำปรึกษาฟรี';
 
+  // Each page has its own real URL (served by the rewrites in vercel.json),
+  // so Google can index every page — and every article — separately.
+  // Keep paths in sync with vercel.json and sitemap.xml.
   var ROUTES = {
-    home:     { hash: '#/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม กรุงเทพฯ ปริมณฑล และภาคตะวันออก' },
-    about:    { hash: '#/about',    title: 'เกี่ยวกับเรา — ' + SITE_NAME },
-    overview: { hash: '#/overview', title: 'สินค้าและบริการ — ' + SITE_NAME },
-    services: { hash: '#/services', title: 'บริการ — ' + SITE_NAME },
-    products: { hash: '#/products', title: 'สินค้า — ' + SITE_NAME },
-    gallery:  { hash: '#/gallery',  title: 'ผลงาน — ' + SITE_NAME },
-    articles: { hash: '#/articles', title: 'บทความ — ' + SITE_NAME },
-    'article-choosing-glass':     { hash: '#/article-choosing-glass',     title: 'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ — ' + SITE_NAME },
-    'article-tempered-laminated': { hash: '#/article-tempered-laminated', title: 'กระจกเทมเปอร์ vs กระจกลามิเนต — ' + SITE_NAME },
-    'article-decor-ideas':        { hash: '#/article-decor-ideas',        title: 'ไอเดียตกแต่งบ้านด้วยงานกระจก — ' + SITE_NAME },
-    contact:  { hash: '#/contact',  title: 'ติดต่อเรา — ' + SITE_NAME }
+    home:     { path: '/',         title: SITE_NAME + ' - รับติดตั้งกระจก อลูมิเนียม กรุงเทพฯ ปริมณฑล และภาคตะวันออก', desc: DEFAULT_DESC },
+    about:    { path: '/about',    title: 'เกี่ยวกับเรา — ' + SITE_NAME, desc: 'รู้จักบริษัท ออล อะเบ้าท์ กลาส จำกัด ผู้เชี่ยวชาญงานกระจก ขายและติดตั้งในเจ้าเดียว ราคาชัดเจน ไม่บวกเกินจริง' },
+    overview: { path: '/overview', title: 'สินค้าและบริการ — ' + SITE_NAME, desc: 'กระจกทุกประเภทและบริการติดตั้งกระจก-อลูมิเนียมครบวงจร โดย All About Glass' },
+    services: { path: '/services', title: 'บริการ — ' + SITE_NAME, desc: 'บริการติดตั้งบานอลูมิเนียม บานเฟอร์นิเจอร์กระจก กระจกอาคาร ผนังกระจก และราวกันตก กรุงเทพฯ ปริมณฑล และภาคตะวันออก' },
+    products: { path: '/products', title: 'สินค้า — ' + SITE_NAME, desc: 'กระจกใส กระจกเงา กระจกเทมเปอร์นิรภัย กระจกลามิเนต กระจกฝ้า และกระจกสี เลือกได้ 3 ระดับราคา' },
+    gallery:  { path: '/gallery',  title: 'ผลงาน — ' + SITE_NAME, desc: 'ตัวอย่างผลงานติดตั้งกระจกและอลูมิเนียมของ All About Glass' },
+    articles: { path: '/articles', title: 'บทความ — ' + SITE_NAME, desc: 'สาระความรู้เรื่องกระจกและอลูมิเนียมสำหรับเจ้าของบ้าน' },
+    'article-choosing-glass':     { path: '/articles/choosing-glass',        title: 'วิธีเลือกกระจกให้เหมาะกับบ้านของคุณ — ' + SITE_NAME, desc: 'แนะนำการเลือกกระจกใส เทมเปอร์ ฝ้า และลามิเนต ให้เหมาะกับแต่ละพื้นที่ในบ้าน' },
+    'article-tempered-laminated': { path: '/articles/tempered-vs-laminated', title: 'กระจกเทมเปอร์ vs กระจกลามิเนต — ' + SITE_NAME, desc: 'เปรียบเทียบกระจกเทมเปอร์และกระจกลามิเนต ต่างกันอย่างไร ควรใช้จุดไหนในบ้าน' },
+    'article-decor-ideas':        { path: '/articles/glass-decor-ideas',     title: 'ไอเดียตกแต่งบ้านด้วยงานกระจก — ' + SITE_NAME, desc: 'รวมไอเดียผนังกระจก ราวกันตกกระจก กระจกเงา และเฟอร์นิเจอร์กระจก เพิ่มความโปร่งโล่งให้บ้าน' },
+    contact:  { path: '/contact',  title: 'ติดต่อเรา — ' + SITE_NAME, desc: 'ติดต่อ All About Glass โทร 062-964-6492 LINE: allaboutglass ขอใบเสนอราคาฟรี' }
   };
+
+  var ROUTE_BY_PATH = {};
+  Object.keys(ROUTES).forEach(function (name) { ROUTE_BY_PATH[ROUTES[name].path] = name; });
 
   var DEFAULT_ROUTE = 'home';
 
@@ -43,9 +51,18 @@
 
   /* ── Router ─────────────────────────────────── */
 
-  function routeFromHash() {
-    var path = (location.hash || '').replace(/^#\/?/, '').replace(/\/+$/, '');
-    return Object.prototype.hasOwnProperty.call(ROUTES, path) ? path : DEFAULT_ROUTE;
+  function normalisePath(pathname) {
+    var p = pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '');
+    return p === '' ? '/' : p;
+  }
+
+  function routeFromLocation() {
+    return ROUTE_BY_PATH[normalisePath(location.pathname)] || DEFAULT_ROUTE;
+  }
+
+  function setMeta(selector, attr, value) {
+    var el = document.head.querySelector(selector);
+    if (el) el.setAttribute(attr, value);
   }
 
   function render(route, opts) {
@@ -66,7 +83,14 @@
       link.classList.toggle('is-active', covers.indexOf(route) !== -1);
     });
 
-    document.title = ROUTES[route].title;
+    var r = ROUTES[route];
+    var url = SITE_URL + r.path;
+    document.title = r.title;
+    setMeta('meta[name="description"]', 'content', r.desc);
+    setMeta('link[rel="canonical"]', 'href', url);
+    setMeta('meta[property="og:url"]', 'content', url);
+    setMeta('meta[property="og:title"]', 'content', r.title);
+    setMeta('meta[property="og:description"]', 'content', r.desc);
 
     if (!opts || opts.scroll !== false) {
       window.scrollTo(0, 0);
@@ -77,8 +101,25 @@
     closeNav();
     closeSubmenus();
     setDialOpen(false);
-    render(routeFromHash());
+    render(routeFromLocation());
   }
+
+  function go(path) {
+    if (normalisePath(location.pathname) !== path) history.pushState(null, '', path);
+    onRouteChange();
+  }
+
+  // Internal links are plain <a href="/about"> — they work without JS (the
+  // server returns this same page). With JS, swap pages without a reload.
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank' || a.origin !== location.origin) return;
+    var path = normalisePath(a.pathname);
+    if (!ROUTE_BY_PATH[path] || a.hash) return;
+    e.preventDefault();
+    go(path);
+  });
 
   /* ── Mobile nav ─────────────────────────────── */
 
@@ -103,7 +144,7 @@
     });
   }
 
-  // Clicking a link whose hash is already active fires no hashchange — close manually.
+  // Clicking the link of the page already showing changes nothing — close manually.
   if (nav) {
     nav.addEventListener('click', function (e) {
       if (e.target.closest('a')) closeNav();
@@ -302,6 +343,14 @@
 
   /* ── Boot ───────────────────────────────────── */
 
-  window.addEventListener('hashchange', onRouteChange);
-  render(routeFromHash(), { scroll: false });
+  // Old links shared before clean URLs (e.g. …/#/contact on Facebook) still
+  // land on the right page: translate the hash route to its new path.
+  if (location.hash.indexOf('#/') === 0) {
+    var legacy = location.hash.slice(2).replace(/\/+$/, '');
+    var name = Object.prototype.hasOwnProperty.call(ROUTES, legacy) ? legacy : DEFAULT_ROUTE;
+    history.replaceState(null, '', ROUTES[name].path);
+  }
+
+  window.addEventListener('popstate', onRouteChange);
+  render(routeFromLocation(), { scroll: false });
 })();

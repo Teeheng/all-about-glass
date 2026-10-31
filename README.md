@@ -13,13 +13,22 @@ python -m http.server 4321
 
 Then open <http://localhost:4321>. No build step, no dependencies.
 
+Pages use real paths (`/about`, `/articles/choosing-glass`, …). On Vercel, `vercel.json`
+rewrites each of those paths to `index.html`. A plain `python -m http.server` has no
+rewrites, so locally start at `/` and navigate from there (or use `vercel dev`, which reads
+`vercel.json`) — opening a deep link like `localhost:4321/about` directly will 404 there.
+
 ## Layout
 
 ```
 index.html                      the site (all eight pages)
 assets/css/styles.css           design tokens + layout + responsive rules
-assets/js/app.js                hash router, mobile nav, enquiry form
-uploads/…_1.jpg                 AAG logo (also used as favicon / og:image)
+assets/js/app.js                path router + per-page meta, mobile nav, enquiry form
+uploads/aag-logo.png            AAG logo (header + speed-dial)
+uploads/LINE_ALBUM_…_1.jpg      old logo copy — only the .dc.html design source still uses it
+uploads/og-image.jpg            1200×630 link-share image; favicon.png, apple-touch-icon.png
+vercel.json                     clean-URL rewrites (one per page) + upload caching
+robots.txt, sitemap.xml         for search engines
 
 All About Glass.dc.html         imported design source — reference only
 support.js                      dc-runtime for the design source — not used by the site
@@ -48,23 +57,45 @@ is a deliberate edit each time, not a regeneration.
 
 ## How it works
 
-Eleven pages live as `<section data-page="…">` in `index.html`. `app.js` shows one at a
-time based on the URL hash, so pages are linkable, bookmarkable, and the browser back
-button works. An unknown hash falls back to home.
+Eleven pages live as `<section data-page="…">` in `index.html`. Each has its own real URL;
+`app.js` shows one at a time based on `location.pathname` (History API), so pages are
+linkable, bookmarkable, indexable by Google one by one, and the back button works. Internal
+links are plain `<a href="/about">` — `app.js` intercepts clicks to swap pages without a
+reload, and on every page change it also updates `<title>`, meta description, canonical,
+and `og:url`/`og:title`/`og:description`.
 
-| page | hash |
+| page | path |
 | --- | --- |
-| หน้าแรก | `#/` |
-| เกี่ยวกับเรา | `#/about` |
-| สินค้าและบริการ (hub) | `#/overview` |
-| สินค้า | `#/products` |
-| บริการ | `#/services` |
-| ผลงาน | `#/gallery` |
-| บทความ (listing) | `#/articles` |
-| — วิธีเลือกกระจกให้เหมาะกับบ้าน | `#/article-choosing-glass` |
-| — เทมเปอร์ vs ลามิเนต | `#/article-tempered-laminated` |
-| — ไอเดียตกแต่งบ้านด้วยกระจก | `#/article-decor-ideas` |
-| ติดต่อเรา | `#/contact` |
+| หน้าแรก | `/` |
+| เกี่ยวกับเรา | `/about` |
+| สินค้าและบริการ (hub) | `/overview` |
+| สินค้า | `/products` |
+| บริการ | `/services` |
+| ผลงาน | `/gallery` |
+| บทความ (listing) | `/articles` |
+| — วิธีเลือกกระจกให้เหมาะกับบ้าน | `/articles/choosing-glass` |
+| — เทมเปอร์ vs ลามิเนต | `/articles/tempered-vs-laminated` |
+| — ไอเดียตกแต่งบ้านด้วยกระจก | `/articles/glass-decor-ideas` |
+| ติดต่อเรา | `/contact` |
+
+**Adding a page means editing three places:** the `ROUTES` map in `app.js`, the
+`rewrites` list in `vercel.json`, and `sitemap.xml`. Unknown paths are a real 404 (no
+catch-all rewrite), so Google doesn't index soft-404 duplicates of the home page.
+
+**Old hash links still work.** Links shared before the switch (e.g. `…/#/contact` or
+`…/?fbclid=…#/article-choosing-glass` on Facebook) are translated on load with
+`history.replaceState` to the matching path. Asset URLs in `index.html` are root-absolute
+(`/assets/…`, `/uploads/…`) so they resolve from nested paths like `/articles/…`.
+
+**SEO files:** `robots.txt`, `sitemap.xml`, and a schema.org `HomeAndConstructionBusiness`
+JSON-LD block in `<head>` (name, phone, email, address, area served, social links — no
+opening hours or ratings, since none are published).
+
+**Brand assets:** `uploads/aag-logo.png` is the official logo file (same square framing as
+the old LINE-album JPG, so the header's whitespace crop is unchanged).
+`uploads/favicon.png` / `apple-touch-icon.png` are the "AAG" letter mark only;
+`uploads/og-image.jpg` (1200×630) is the link-share image. `--navy` is the Brand Guideline
+navy `#00285B`.
 
 Each article listing card (`.article-card`) is itself an `<a>` to one of the three detail
 pages — same pattern as `.overview-card`: link-color inheritance is neutralized by setting
