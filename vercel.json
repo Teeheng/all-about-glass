@@ -38,6 +38,22 @@
       "destination": "/articles/glass-decor-ideas/index.html"
     },
     {
+      "source": "/service-area",
+      "destination": "/service-area/index.html"
+    },
+    {
+      "source": "/service-area/sriracha",
+      "destination": "/service-area/sriracha/index.html"
+    },
+    {
+      "source": "/service-area/chonburi",
+      "destination": "/service-area/chonburi/index.html"
+    },
+    {
+      "source": "/service-area/bangkok",
+      "destination": "/service-area/bangkok/index.html"
+    },
+    {
       "source": "/faq",
       "destination": "/faq/index.html"
     },
