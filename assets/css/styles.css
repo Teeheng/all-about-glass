@@ -566,6 +566,55 @@ h3 { font-size: 19px; font-weight: 600; margin: 0; }
 }
 .article-detail__cta p { margin: 0; font-weight: 600; }
 
+/* ── Service area pages ───────────────────────── */
+
+.overview-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.area__hub-note { text-align: center; margin: 40px 0 0; color: var(--muted); }
+.area__hub-note a,
+.area__more a,
+.area__others a,
+.area__cta-sub a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+
+.area__lead { max-width: 820px; }
+.area__h2 { font-size: 26px; margin: 48px 0 24px; color: var(--ink); }
+.area__more { margin: 20px 0 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+.area__tip {
+  margin-top: 48px;
+  padding: 32px 36px;
+  background: var(--panel);
+  border-left: 4px solid var(--navy);
+  border-radius: var(--radius-lg);
+}
+.area__tip-title { font-size: 20px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.area__tip .prose { margin: 0; max-width: 900px; }
+
+.area__cta {
+  margin-top: 56px;
+  padding: 36px 40px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.area__cta .btn-row { margin: 0; }
+.area__cta-title { font-size: 22px; font-weight: 600; margin: 0 0 6px; }
+.area__cta-sub { margin: 0; color: var(--blue-mist); font-size: 15px; line-height: 1.7; max-width: 560px; }
+.area__cta-sub a { color: #fff; }
+.area__others { margin: 32px 0 0; color: var(--muted); font-size: 15px; }
+
+@media (max-width: 1100px) {
+  .overview-grid--3 { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 699px) {
+  .area__tip { padding: 24px; }
+  .area__cta { padding: 28px 24px; }
+}
+
 /* ── FAQ & work steps ─────────────────────────── */
 
 /* FAQ uses the full page width: intro stays at reading width, steps run

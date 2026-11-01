@@ -79,7 +79,7 @@ is a deliberate edit each time, not a regeneration.
 
 ## How it works
 
-Twelve pages live as `<section data-page="…">` in `src/index.html`; `build.py` writes each
+Sixteen pages live as `<section data-page="…">` in `src/index.html`; `build.py` writes each
 one to its own file at its real URL. Internal links are plain `<a href="/about">` and load
 the page normally. (`app.js` can still swap sections without a reload when several are in one
 file — e.g. if `src/index.html` is opened directly — but the live site doesn't use that.)
@@ -91,11 +91,15 @@ file — e.g. if `src/index.html` is opened directly — but the live site doesn
 | สินค้าและบริการ (hub) | `/overview` |
 | สินค้า | `/products` |
 | บริการ | `/services` |
-| ผลงาน | `/gallery` |
+| ผลงาน — **hidden**: not in nav/sitemap, `noindex` until real photos (see `NOINDEX` in build.py) | `/gallery` |
 | บทความ (listing) | `/articles` |
 | — วิธีเลือกกระจกให้เหมาะกับบ้าน | `/articles/choosing-glass` |
 | — เทมเปอร์ vs ลามิเนต | `/articles/tempered-vs-laminated` |
 | — ไอเดียตกแต่งบ้านด้วยกระจก | `/articles/glass-decor-ideas` |
+| พื้นที่ให้บริการ (hub) | `/service-area` |
+| — ศรีราชา | `/service-area/sriracha` |
+| — ชลบุรีและภาคตะวันออก | `/service-area/chonburi` |
+| — กรุงเทพฯ และปริมณฑล | `/service-area/bangkok` |
 | คำถามที่พบบ่อย + ขั้นตอนการทำงาน | `/faq` |
 | นโยบายความเป็นส่วนตัว | `/privacy` |
 | ติดต่อเรา | `/contact` |
